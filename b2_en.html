@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetBot AI Chat - TierZahnZentrum</title>
+    
+    <link rel="shortcut icon" href="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-icon-rgb.svg#150" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-icon-rgb.svg#150">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        /* Font Import: Plus Jakarta Sans */
+        @font-face {
+            font-family: 'Plus Jakarta Sans';
+            src: url('https://tierzahnzentrum.com/wp-content/uploads/2024/08/PlusJakartaSans-Regular.ttf#139') format('truetype');
+            font-weight: 400; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Plus Jakarta Sans';
+            src: url('https://tierzahnzentrum.com/wp-content/uploads/2024/08/PlusJakartaSans-Bold.ttf#142') format('truetype');
+            font-weight: 700; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Plus Jakarta Sans';
+            src: url('https://tierzahnzentrum.com/wp-content/uploads/PlusJakartaSans-SemiBold.ttf#805') format('truetype');
+            font-weight: 600; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Plus Jakarta Sans';
+            src: url('https://tierzahnzentrum.com/wp-content/uploads/2024/08/PlusJakartaSans-Medium.ttf#141') format('truetype');
+            font-weight: 500; font-style: normal; font-display: swap;
+        }
+
+        /* CSS Variables for theming */
+        :root {
+            --primary-color: #0084AC;
+            --primary-color-darker: #006A8A; 
+            --secondary-color: #E9F6FA; 
+            --user-message-bg: #0084AC; 
+            --ai-message-bg: #E9F6FA;   
+            --text-color: #333333;
+            --text-color-light: #ffffff;
+            --text-color-secondary: #555555;
+            --border-color: #DDE4E8;
+            --background-color: #ffffff;
+            --content-bg-color: #F2F6FA;
+            --font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+            --footer-height: auto; 
+        }
+
+        /* Basic body and link styling */
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        a { color: var(--primary-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Site Header styling */
+        /* --- НАЧАЛО НОВЫХ/ОБНОВЛЕННЫХ СТИЛЕЙ ДЛЯ HEADER --- */
+    .site-header {
+        background-color: var(--background-color);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        height: 80px; /* Высота для десктопной версии хедера */
+    }
+
+    .header-content-wrapper {
+        max-width: 1200px; /* Ограничиваем максимальную ширину контента хедера */
+        margin: 0 auto; /* Центрируем контент хедера */
+        padding: 0 30px; /* Боковые отступы для десктопа */
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo-container img { 
+        height: 45px; 
+        width: auto; 
+        display: block; /* Убирает лишний отступ под img */
+    }
+
+    /* Навигация на десктопе */
+    .main-nav {
+        display: flex; /* Показываем на десктопе */
+        flex-grow: 1; /* Позволяем навигации занимать доступное пространство */
+        justify-content: center; /* Центрируем пункты меню */
+    }
+    .main-nav .nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+    .main-nav .nav-item {
+        margin-left: 15px; /* Уменьшен отступ между пунктами */
+        margin-right: 15px;
+        position: relative;
+    }
+    .main-nav .nav-link {
+        color: var(--text-color);
+        font-weight: 500;
+        font-size: 15px; /* Можно настроить размер */
+        text-decoration: none;
+        padding: 5px 0;
+    }
+    /* Стиль активной ссылки и при наведении (убрал нижнее подчеркивание, как на скриншоте 2) */
+    .main-nav .nav-link:hover,
+    .main-nav .nav-item.active .nav-link {
+        color: var(--primary-color);
+        /* border-bottom: 2px solid var(--primary-color); /* Убрано подчеркивание */
+    }
+    /* Стили для подменю остаются прежними, если они нужны */
+    .main-nav .submenu { display: none; position: absolute; top: 100%; left: 0; background-color: var(--background-color); border: 1px solid var(--border-color); box-shadow: 0 3px 5px rgba(0,0,0,0.1); list-style: none; padding: 0; margin: 0; min-width: 200px; z-index: 1001; }
+    .main-nav .submenu .nav-item { margin-left: 0; width: 100%; }
+    .main-nav .submenu .nav-link { display: block; padding: 10px 15px; font-size: 14px; border-bottom: none; }
+    .main-nav .submenu .nav-link:hover { background-color: var(--secondary-color); }
+    .main-nav .nav-item.has-dropdown:hover .submenu { display: block; }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Отступ между элементами в блоке контактов */
+    }
+    .header-actions .header-icon {
+        height: 24px; /* Размер иконок */
+        width: 24px;
+        display: block;
+    }
+    .header-actions .contact-phone-link {
+        display: flex;
+        align-items: center;
+        gap: 8px; /* Отступ между иконкой телефона и номером */
+        color: var(--text-color);
+        font-weight: 500;
+    }
+    .header-actions .phone-number-text {
+        font-size: 14px; /* Размер текста номера телефона */
+    }
+    .header-actions .call-btn.header-call-btn { /* Стили для кнопки "Jetzt anrufen" */
+        background-color: var(--primary-color);
+        color: var(--text-color-light);
+        padding: 8px 15px; /* Размеры кнопки */
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        white-space: nowrap; /* Чтобы текст не переносился */
+    }
+    .header-actions .call-btn.header-call-btn:hover {
+        background-color: var(--primary-color-darker);
+    }
+    .contact-email-link .header-icon { /* Для выравнивания, если нужно */
+         display: block;
+    }
+
+    .mobile-menu-toggle {
+        display: none; /* Скрыт на десктопе */
+        background: none;
+        border: none;
+        font-size: 28px; 
+        color: var(--text-color);
+        cursor: pointer;
+        padding: 5px; /* Увеличим кликабельную область */
+    }
+
+    /* Адаптация для мобильных устройств */
+    @media (max-width: 992px) { /* Планшеты и мобильные */
+        .site-header {
+            height: 60px; /* Фиксированная высота для мобильного хедера */
+        }
+        .header-content-wrapper {
+            padding: 0 15px; /* Меньше отступы на мобильных */
+        }
+        .main-nav {
+            /* Стили для мобильного меню-оверлея */
+            display: none; /* Изначально скрыто, управляется JS */
+            flex-direction: column;
+            position: fixed;
+            top: 0; /* Начинается от верха */
+            left: -100%; /* Изначально скрыто за левым краем */
+            width: 80%; /* Ширина меню, например 80% */
+            max-width: 300px; /* Максимальная ширина */
+            height: 100vh;
+            background-color: var(--background-color);
+            z-index: 1090; 
+            padding: 20px;
+            padding-top: 70px; /* Отступ сверху, чтобы не перекрывать хедер или кнопку закрытия */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s ease-in-out; /* Анимация появления */
+        }
+        .main-nav.mobile-active { /* Класс для активного мобильного меню */
+            display: flex !important;
+            left: 0; /* Показываем меню */
+        }
+        .main-nav .nav {
+            flex-direction: column;
+            width: 100%;
+            align-items: flex-start; /* Выравнивание пунктов по левому краю */
+        }
+        .main-nav .nav-item {
+            margin: 0; /* Убираем отступы слева/справа */
+            width: 100%;
+        }
+        .main-nav .nav-link {
+            font-size: 18px; 
+            padding: 15px 10px; /* Больше отступы для удобства нажатия */
+            display: block; 
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            text-align: left;
+        }
+        .main-nav .nav-item:last-child .nav-link {
+            border-bottom: none;
+        }
+        .main-nav .submenu { /* Подменю на мобильных */
+            position: static;
+            box-shadow: none;
+            border: none;
+            border-top: 1px dashed var(--border-color);
+            width: auto;
+            margin-left: 20px; /* Небольшой отступ для вложенности */
+            padding-left: 0;
+            background-color: transparent;
+        }
+        .main-nav .submenu .nav-link {
+            font-size: 16px;
+            padding: 10px;
+            border-bottom: none; /* Убираем двойные линии */
+        }
+        /* JS потребуется для раскрытия подменю по клику на мобильных */
+        .main-nav .nav-item.has-dropdown > .nav-link {
+            /* Можно добавить стрелку для раскрывающихся списков */
+            /* position: relative; */
+        }
+        /* .main-nav .nav-item.has-dropdown > .nav-link::after {
+            content: '▼';
+            font-size: 0.7em;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        } */
+        /* .main-nav .nav-item.has-dropdown.open > .nav-link::after {
+            content: '▲';
+        } */
+
+
+        .header-actions .phone-number-text {
+            display: none; /* Скрываем текст номера телефона */
+        }
+        .header-actions .call-btn.header-call-btn {
+            display: none; /* Скрываем кнопку "Jetzt anrufen" */
+        }
+        .header-actions .header-icon { /* Иконки могут быть чуть меньше на мобильных */
+            height: 22px;
+            width: 22px;
+        }
+         .header-actions {
+            gap: 12px; /* Поменьше отступ между иконками */
+        }
+
+        .mobile-menu-toggle {
+            display: block !important; /* Показываем кнопку бургер-меню */
+            z-index: 1100; /* Чтобы была поверх меню, когда оно выдвигается */
+        }
+        .mobile-menu-toggle.active {
+            /* Стили для кнопки "X" (если меняем через JS) */
+            /* Например, position: fixed; right: 15px; top: 15px; */
+        }
+    }
+
+    /* Исправляем высоту чат-контейнера для мобильных */
+    @media (max-width: 768px) { 
+        .chat-container { 
+            height: calc(100vh - 60px - 20px); /* 60px - новая высота моб. хедера, 20px - отступы wrapper */
+        } 
+    }
+    /* --- КОНЕЦ НОВЫХ/ОБНОВЛЕННЫХ СТИЛЕЙ ДЛЯ HEADER --- */
+        /* Hidden Controls Container */
+        #hiddenControlsContainer {
+            display: none; /* Hidden from user */
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #e0e0e0; /* Different bg to distinguish if ever shown */
+            border-bottom: 1px solid var(--border-color);
+        }
+        #hiddenControlsContainer label {
+            margin-right: 8px;
+            font-weight: 500;
+        }
+        #hiddenControlsContainer select, #hiddenControlsContainer input {
+            padding: 5px 8px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            font-family: var(--font-family);
+            font-size: 14px;
+            margin-right: 15px;
+        }
+
+
+        /* Chat page layout */
+        .chat-page-wrapper {
+            flex-grow: 1;
+            background-color: var(--content-bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 70vh; 
+            max-height: 600px; 
+            min-height: 450px;
+            background-color: var(--background-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat messages area */
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; 
+        }
+
+        .message-wrapper {
+            display: flex;
+            max-width: 85%; 
+        }
+        
+        .ai-message-wrapper {
+            align-self: flex-start;
+            flex-direction: row; 
+            gap: 10px;
+        }
+
+        .user-message-wrapper {
+            align-self: flex-end;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color); 
+            color: var(--primary-color); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px; 
+            object-fit: cover; 
+            flex-shrink: 0;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .message-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: calc(100% - 50px); 
+        }
+        
+        .sender-name {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: var(--text-color); /* Made name slightly more prominent */
+            margin-bottom: 2px;
+        }
+        .sender-title {
+            font-size: 0.75em;
+            color: var(--text-color-secondary);
+            margin-bottom: 4px;
+        }
+        .ai-message-wrapper .sender-name, .ai-message-wrapper .sender-title {
+            margin-left: 2px; 
+        }
+
+
+        .message { 
+            padding: 10px 15px;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 15px;
+            word-wrap: break-word;
+            position: relative; 
+        }
+        .message p { margin: 0 0 3px 0; white-space: pre-wrap; }
+        .message .timestamp { font-size: 0.7em; color: #888; display: block; margin-top: 4px; }
+
+        .ai-message { 
+            background-color: var(--ai-message-bg); 
+            color: var(--text-color); 
+            border-bottom-left-radius: 5px; 
+            align-self: flex-start; 
+        }
+        .ai-message .timestamp { text-align: left; }
+        
+        .ai-message-wrapper.typing-indicator .message p { font-style: italic; color: var(--text-color-secondary); }
+        .ai-message-wrapper.typing-indicator .message { background-color: transparent; box-shadow: none; padding-left:0; }
+
+
+        .user-message { 
+            background-color: var(--user-message-bg); 
+            color: var(--text-color-light); 
+            border-bottom-right-radius: 5px; 
+            align-self: flex-end; 
+        }
+        .user-message .timestamp { text-align: right; color: rgba(255,255,255,0.7); }
+
+
+        /* Chat input area */
+        .chat-input-area { display: flex; padding: 15px 20px; border-top: 1px solid var(--border-color); background-color: #f9f9f9; }
+        .chat-input-area textarea {
+            flex-grow: 1; padding: 12px 18px; border: 1px solid var(--border-color); border-radius: 22px;
+            resize: none; min-height: 24px; max-height: 120px; overflow-y: auto;
+            font-family: var(--font-family); font-size: 15px; line-height: 1.5; margin-right: 10px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .chat-input-area textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 132, 172, 0.2); }
+        
+        .chat-input-area button {
+            background-color: var(--primary-color); color: var(--text-color-light); border: none;
+            padding: 0 25px; border-radius: 22px; cursor: pointer; font-size: 15px; font-weight: 600;
+            transition: background-color 0.2s ease, box-shadow 0.3s ease; 
+            display: flex; align-items: center; justify-content: center;
+        }
+        .chat-input-area button:hover { background-color: var(--primary-color-darker); }
+        .chat-input-area button:disabled { background-color: #b0bec5; cursor: not-allowed; }
+        .chat-input-area button svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* Subtle Glow Animation for Send Button */
+        @keyframes subtleGlow {
+            0% { box-shadow: 0 0 4px rgba(0, 132, 172, 0.2); }
+            50% { box-shadow: 0 0 12px rgba(0, 132, 172, 0.6); }
+            100% { box-shadow: 0 0 4px rgba(0, 132, 172, 0.2); }
+        }
+        .highlight-send-button {
+            animation: subtleGlow 1.5s ease-in-out 2; /* Glows for 3 seconds total */
+        }
+
+
+        /* Source citation button and tooltip */
+        .source-button {
+            display: inline-block; background-color: var(--primary-color); color: white;
+            border: none; border-radius: 50%; width: 20px; height: 20px;
+            font-size: 12px; font-weight: bold; line-height: 20px; text-align: center;
+            cursor: pointer; margin-left: 5px; position: relative; vertical-align: super;
+        }
+        .source-button .tooltip-text {
+            visibility: hidden; width: max-content; max-width: 250px;
+            background-color: #555; color: #fff; text-align: left; 
+            border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 1;
+            bottom: 135%; 
+            left: 50%; transform: translateX(-50%); opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s; font-size: 12px;
+            font-weight: normal; line-height: 1.4; white-space: normal;
+        }
+        .source-button:hover .tooltip-text { visibility: visible; opacity: 1; }
+        .source-button .tooltip-text::after { 
+            content: ""; position: absolute; top: 100%; left: 50%;
+            margin-left: -5px; border-width: 5px; border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Site Footer styling (condensed for brevity) */
+        /* --- НАЧАЛО НОВЫХ СТИЛЕЙ ДЛЯ FOOTER --- */
+.site-footer {
+    padding: 40px 40px 20px 40px; /* Увеличен верхний отступ, уменьшен нижний */
+    background-color: var(--content-bg-color); /* Используем content-bg-color как на скриншоте */
+    border-top: 1px solid var(--border-color);
+    color: var(--text-color-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer-content {
+    max-width: 1100px; /* Слегка уменьшил для соответствия скриншоту */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.9fr 1.2fr 0.9fr; /* Пропорции колонок, средняя шире */
+    gap: 30px; /* Отступ между колонками */
+    align-items: start;
+}
+
+.footer-column h5, .footer-column h4 {
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: 600; /* или 500, как на скриншоте */
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+.footer-column-1 .footer-clinic-name { /* Для имени клиники может быть чуть больше отступ снизу */
+    margin-bottom: 10px;
+}
+.footer-column-1 .footer-address {
+    margin-bottom: 20px;
+    font-size: 13px; /* Чуть меньше для адреса */
+    line-height: 1.6;
+}
+.footer-column-1 .footer-address a {
+    color: var(--text-color-secondary); /* Ссылки в адресе */
+}
+.footer-column-1 .footer-address a:hover {
+    color: var(--primary-color);
+}
+
+
+.footer-social-icons {
+    display: flex;
+    gap: 12px; /* Отступ между иконками соцсетей */
+}
+.footer-social-icons img {
+    width: 28px; /* Размер иконок */
+    height: 28px;
+    opacity: 0.8; /* Слегка приглушенные */
+    transition: opacity 0.2s ease;
+}
+.footer-social-icons a:hover img {
+    opacity: 1;
+}
+
+/* Центральная колонка */
+.footer-column-2 {
+    text-align: center;
+}
+.footer-center-logo {
+    height: 45px; /* Размер логотипа-лапки */
+    width: auto;
+    margin: 0 auto 15px auto;
+    display: block;
+}
+.footer-column-2 .footer-question {
+    font-size: 15px; /* Размер текста "Sie haben Fragen?" */
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+.footer-contact-email {
+    margin-bottom: 20px;
+}
+.footer-contact-email a {
+    font-size: 1.4em; /* Размер email адреса */
+    font-weight: 600; /* Полужирный */
+    color: var(--primary-color);
+    word-break: break-all;
+}
+.footer-contact-email a:hover {
+    text-decoration: underline;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Отступ между кнопками */
+    flex-wrap: wrap; /* Перенос кнопок, если не помещаются */
+}
+.btn.footer-btn { /* Общие стили для кнопок в футере */
+    padding: 10px 25px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 140px; /* Минимальная ширина кнопок */
+    box-sizing: border-box;
+}
+.btn-primary.footer-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: 1px solid var(--primary-color);
+}
+.btn-primary.footer-btn:hover {
+    background-color: var(--primary-color-darker);
+    border-color: var(--primary-color-darker);
+}
+.btn-outline.footer-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+.btn-outline.footer-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+}
+
+/* Правая колонка */
+.footer-column-3 {
+    /* Стили по умолчанию подходят, можно настроить text-align, если нужно */
+}
+.footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links-list li {
+    margin-bottom: 8px;
+}
+.footer-links-list a {
+    color: var(--text-color-secondary);
+    font-size: 14px;
+}
+.footer-links-list a:hover {
+    color: var(--primary-color);
+}
+
+.footer-copyright {
+    text-align: center;
+    padding-top: 30px; /* Увеличен отступ сверху */
+    margin-top: 30px; /* Увеличен отступ сверху */
+    border-top: 1px solid var(--border-color);
+    font-size: 13px;
+    color: var(--text-color-secondary);
+}
+
+/* Адаптация футера для мобильных устройств */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 30px 20px 20px 20px; /* Уменьшены боковые отступы */
+    }
+    .footer-content {
+        grid-template-columns: 1fr; /* Одна колонка */
+        gap: 30px; /* Отступ между блоками при вертикальном расположении */
+        text-align: center; /* Центрирование текста в колонках */
+    }
+    .footer-column {
+         /* Убираем индивидуальные выравнивания, если они были */
+    }
+    .footer-column-1 .footer-address,
+    .footer-column-1 .footer-clinic-name {
+        text-align: center; /* Явно центрируем адрес */
+    }
+
+    .footer-social-icons {
+        justify-content: center; /* Центрируем иконки соцсетей */
+        margin-top: 15px;
+        margin-bottom: 15px; /* Добавим отступ снизу */
+    }
+
+    .footer-center-logo {
+        margin-top: 0; /* Убрать верхний отступ у лого, если он был */
+        margin-bottom: 10px;
+        height: 40px;
+    }
+    .footer-contact-email a {
+        font-size: 1.2em; /* Чуть меньше email на мобильных */
+    }
+    .footer-buttons {
+        flex-direction: column; /* Кнопки одна под другой */
+        align-items: center; /* Центрируем кнопки */
+        gap: 12px;
+    }
+    .btn.footer-btn {
+        width: 100%; /* Кнопки на всю ширину (ограничены max-width) */
+        max-width: 280px; /* Максимальная ширина кнопок */
+    }
+    /* Скрываем правую колонку со ссылками на мобильных, как на скриншоте */
+    .footer-column-3 {
+        display: none; 
+    }
+     /* Чтобы центральная колонка (Paw, Sie haben Fragen, email, buttons) шла ПЕРЕД информацией о клинике на мобильных */
+    .footer-column-2 { order: -1; } /* Поднимаем этот блок наверх */
+
+}
+/* --- КОНЕЦ НОВЫХ СТИЛЕЙ ДЛЯ FOOTER --- */
+
+        /* End Scenario Modal (condensed for brevity) */
+        .end-scenario-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .end-scenario-modal { background-color: white; padding: 30px 40px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); text-align: center; }
+        .end-scenario-modal p { font-size: 18px; color: var(--text-color); margin-bottom: 20px; }
+        .end-scenario-modal button { background-color: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 500; }
+        .end-scenario-modal button:hover { background-color: var(--primary-color-darker); }
+
+        /* Responsive adjustments (condensed for brevity) */
+        @media (max-width: 992px) { .main-nav { display: none; } .mobile-menu-toggle { display: block; } .site-header .header-contact { display: none; } .header-main { justify-content: space-between; } .message-wrapper { max-width: 90%; } }
+        @media (max-width: 768px) { .site-header { padding: 10px 15px; } .header-top { justify-content: center; font-size: 13px; } .header-top .contact-phone { margin-right: 10px;} .header-top .call-btn { margin-right: 10px; padding: 5px 10px; font-size: 12px;} .header-top .contact-phone img, .header-top .contact-email img { height: 18px; width: 18px; } .header-main .logo-container img { height: 40px; } .chat-page-wrapper { padding: 10px; align-items: stretch; } .chat-container {             height: calc(100vh - 129px - 20px); /* Adjusted for more accurate total mobile header height and wrapper padding */
+            ; max-height: none; min-height: 300px; border-radius: 8px; } .message-wrapper { max-width: 95%; } .message { font-size: 14px; } .avatar { width: 35px; height: 35px; font-size: 24px; } .message-content-wrapper { max-width: calc(100% - 45px); } .sender-name { font-size: 0.8em; } .sender-title {font-size: 0.7em;} .chat-input-area textarea { padding: 10px 15px; font-size: 14px; } .chat-input-area button { padding: 0 20px; font-size: 14px; } .footer-content { grid-template-columns: 1fr; text-align: center; } .footer-column .footer-logo { margin-left: auto; margin-right: auto; } .footer-social-icons { justify-content: center; } .site-footer { padding: 20px; } .end-scenario-modal { width: 80%; padding: 20px;} .end-scenario-modal p { font-size: 16px;} }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-content-wrapper">
+            <div class="logo-container">
+                <a href="https://tierzahnzentrum.com" title="TierZahnZentrum Homepage">
+                    <img src="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-Logo-quer-rgb.svg#149" alt="TierZahnZentrum Logo">
+                </a>
+            </div>
+            <nav class="main-nav" id="mainNav">
+                <ul class="nav">
+                    <li class="nav-item has-dropdown">
+                        <a href="https://tierzahnzentrum.com/ueber-uns/" class="nav-link">Über uns</a>
+                        <ul class="submenu">
+                            <li class="nav-item"><a href="https://tierzahnzentrum.com/ueber-uns/team/" class="nav-link">Team</a></li>
+                            <li class="nav-item"><a href="https://tierzahnzentrum.com/ueber-uns/mission/" class="nav-link">Mission</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="https://tierzahnzentrum.com/leistungen/" class="nav-link">Leistungen</a></li>
+                    <li class="nav-item"><a href="https://tierzahnzentrum.com/fuer-tierhalterinnen/" class="nav-link">Für Tierhalter:innen</a></li>
+                    <li class="nav-item"><a href="https://tierzahnzentrum.com/fuer-kolleginnen/" class="nav-link">Für Kolleg:innen</a></li>
+                    <li class="nav-item active"><a href="#" class="nav-link">Chat-Support</a></li> 
+                    <li class="nav-item"><a href="https://tierzahnzentrum.com/fuer-tierhalterinnen/notfall/" class="nav-link">Notfall</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="tel:089413292351" class="contact-phone-link">
+                    <img src="https://tierzahnzentrum.com/wp-content/uploads/telefon-kontakt-icon.svg" alt="Phone Icon" class="header-icon">
+                    <span class="phone-number-text">089-413 292 351</span>
+                </a>
+                <a href="tel:089413292351" class="btn call-btn header-call-btn">Jetzt anrufen</a>
+                <a href="mailto:info@tierzahnzentrum.com" class="contact-email-link" title="Email us">
+                    <img src="https://tierzahnzentrum.com/wp-content/uploads/e-mail-kontakt-icon.svg" alt="Email Icon" class="header-icon">
+                </a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">☰</button>
+        </div>
+    </header>
+
+    <div id="hiddenControlsContainer">
+        <label for="personaToggleInternal">Antworten als (intern):</label>
+        <select id="personaToggleInternal">
+            <option value="bot" selected>VetBot</option>  <option value="human">Lena Bauer</option>
+        </select>
+        <label for="sourcesToggleInternal">Quellen anzeigen (intern):</label>
+        <input type="checkbox" id="sourcesToggleInternal">
+    </div>
+    <div class="chat-page-wrapper">
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                </div>
+            <div class="chat-input-area">
+                <textarea id="userInput" placeholder="Write your message..." rows="1" disabled></textarea>
+                <button id="sendButton" title="Send" disabled>
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-column footer-column-1"> <h5 class="footer-clinic-name">TierZahnZentrum <br>Dr. Anna Draschka</h5>
+                <p class="footer-address">
+                    Fürstenrieder Straße 284<br>
+                    81377 München<br>
+                    Tel: <a href="tel:+4989413292351">089-413 292 351</a><br>
+                    E-Mail: <a href="mailto:info@tierzahnzentrum.com">info@tierzahnzentrum.com</a>
+                </p>
+                <div class="footer-social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61556672531345" target="_blank" title="Facebook"><img src="https://placehold.co/28x28/777777/FFFFFF?text=f&font=arial" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/tier.zahnzentrum/" target="_blank" title="Instagram"><img src="https://placehold.co/28x28/777777/FFFFFF?text=i&font=arial" alt="Instagram"></a>
+                    <a href="#" target="_blank" title="YouTube"><img src="https://placehold.co/28x28/777777/FFFFFF?text=yt&font=arial" alt="YouTube"></a>
+                </div>
+            </div>
+    
+            <div class="footer-column footer-column-2"> <img src="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-icon-rgb.svg" alt="TierZahnZentrum Icon" class="footer-center-logo">
+                <h4 class="footer-question">Sie haben Fragen?</h4>
+                <p class="footer-contact-email"><a href="mailto:info@tierzahnzentrum.com">info@tierzahnzentrum.com</a></p>
+                <div class="footer-buttons">
+                    <a href="mailto:info@tierzahnzentrum.com" class="btn btn-primary footer-btn">E-Mail senden</a>
+                    <a href="tel:089413292351" class="btn btn-outline footer-btn">Jetzt anrufen</a>
+                </div>
+            </div>
+    
+            <div class="footer-column footer-column-3"> <h5 class="footer-links-title">Über uns</h5>
+                <ul class="footer-links-list">
+                    <li><a href="https://tierzahnzentrum.com/ueber-uns/">Über uns</a></li>
+                    <li><a href="https://tierzahnzentrum.com/datenschutz/">Datenschutz</a></li>
+                    <li><a href="https://tierzahnzentrum.com/impressum/">Impressum</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2025 Tierarzt Plus München Süd GmbH
+        </div>
+    </footer>
+
+    <div class="end-scenario-overlay" id="endScenarioOverlay">
+        <div class="end-scenario-modal">
+            <p>The consultation has ended. You can now return or close this window.</p>
+            <button id="closeModalButton">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const chatMessagesEl = document.getElementById('chatMessages');
+        const userInputEl = document.getElementById('userInput');
+        const sendButtonEl = document.getElementById('sendButton');
+        const endScenarioOverlayEl = document.getElementById('endScenarioOverlay');
+        const closeModalButtonEl = document.getElementById('closeModalButton');
+        const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
+        const mainNavEl = document.getElementById('mainNav');
+        
+        // Hidden controls (for internal testing/setup)
+        const personaToggleInternalEl = document.getElementById('personaToggleInternal');
+        const sourcesToggleInternalEl = document.getElementById('sourcesToggleInternal');
+    
+        // Persona Configuration
+        const personaConfig = {
+            bot: {
+                name: "Zähnchen Bot",
+                title: "AI Dental Assistant | TierZanhZentrum",
+                avatarType: "emoji", 
+                avatarValue: "🤖" 
+            },
+            human: {
+                name: "Lena Bauer",
+                title: "Tierärztliche Fachangestellte | TierZanhZentrum", // Veterinary Assistant
+                avatarType: "image",
+                avatarValue: "https://tierzahnzentrum.com/wp-content/uploads/Franziska-Iwanowski-Portraet-1.jpg"
+            }
+        };
+    
+        // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Установка значений по умолчанию ---
+        // Чтобы управлять поведением по умолчанию, меняйте значения именно этих двух переменных:
+        let currentAiPersonaKey = 'bot'; // Установите 'bot' или 'human'. Сейчас по умолчанию 'bot'.
+                                         // Комментарий: 'Default AI persona. Options: 'human' (Lena Bauer) or 'bot' (VetBot)'
+        let showSources = false;         // Установите true (показывать) или false (скрывать). Сейчас по умолчанию false (скрыты).
+                                         // Комментарий: 'Default source visibility. Options: true (show) or false (hide)'
+        // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЯ ---
+    
+    
+        // Chat Scenario Definition (остается ваш "Humanized Dialogue")
+        const chatScenario = [
+            { 
+                type: 'GREETING_CB', 
+                text: "Hello! 😊 Thank you for contacting TierZahnZentrum. How can I assist you today?" 
+            },
+            { 
+                type: 'PO_INPUT', 
+                expectedText: "Hi! I just wanted to quickly confirm Buddy’s dental cleaning appointment for Tuesday 16 April at 10:30 with Dr Haas?" 
+            },
+            { 
+                type: 'CB', 
+                text: "Certainly! Let me just pull up Buddy's appointment details for you. One moment, please..." 
+            },
+            { 
+                type: 'CB', 
+                text: "Okay, I've got it here. Yes, Buddy is all set for his dental cleaning with Dr. Haas on Tuesday, April 16th, at 10:30 AM at our Munich clinic (Source: Internal Clinic System##i##). We're looking forward to seeing him! Should anything change on your end, or if you need to reschedule, please don't hesitate to reply to this message or call us directly at 089-413 292 351 (Source: General Contact Info##i##)." 
+            },
+            { 
+                type: 'PO_INPUT', 
+                expectedText: "Perfect, thanks! Do I need to do anything special before we come in? Like food or water restrictions?" 
+            },
+            { 
+                type: 'CB', 
+                text: "Proper preparation is key for a smooth procedure. Here’s what we generally recommend(Source: Clinic pre-op instruction №09.10##i##):\n\n• No Food After Midnight: Please ensure Buddy has no food after midnight the night before his appointment. This is very important for the anaesthesia.\n• Water Access: He can have access to water until about 6:00 AM on the morning of the procedure.\n• Comfort Walk: A short, calm walk before you head to the clinic will help him feel more comfortable and allow him to relieve himself.\n• Keep Him Warm: And a really important point, especially for procedures under anaesthesia, is to keep Buddy warm on his way to us. Using a cozy blanket or an insulated carrier can make a significant difference in preventing anaesthetic hypothermia (Source: Anaesthetic hypothermia prevention guideline##i##). This helps ensure he stays comfortable and safe." 
+            },
+            { 
+                type: 'PO_INPUT', 
+                expectedText: "Interesting about the warmth. Why is temperature so important for a dental cleaning?" 
+            },
+            { 
+                type: 'CB', 
+                text: "It's a very good point to bring up! When pets are under general anaesthesia, their natural ability to regulate body temperature is reduced and they can lose heat rapidly. This can lead to a condition called hypothermia, which might slow down their recovery process and, in some cases, increase the risk of complications. In dogs, the most pronounced drop (≈ 1 °C) occurs within the first 15 min after induction(Source: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Active warming in our clinic significantly attenuates this decline and lowers the incidence of peri-anaesthetic hypothermia(Source: Clinic pre-op instruction №09.10##i##). Our priority is to maintain a stable core body temperature for Buddy, ideally between 37 and 38 degrees Celsius(Source: MSD Vet Manual, Chapter 15##i##). This supports good circulation and helps their bodies metabolise the anaesthetic drugs effectively and recover more smoothly." 
+            },
+            { 
+                type: 'PO_INPUT', 
+                expectedText: "Got it, that makes sense. Thanks. To be honest, I'm still a little nervous about the anaesthesia itself. How risky is it generally?" 
+            },
+            { 
+                type: 'CB', 
+                text: "Before any procedure, Dr. Haas will perform a thorough pre-anaesthetic examination of Buddy to ensure he's a good candidate. We then use our anaesthesia protocols, and throughout the entire procedure, Buddy will be closely monitored by a dedicated and highly trained member of our veterinary team. This includes continuous real-time monitoring of his ECG (heart rhythm), blood pressure, oxygen saturation (SpO2), respiratory function via capnography (CO2 levels), and core body temperature, with readings documented at least every 5 minutes(Source: Internal Procedure Protocol №5.10##i##). \n\nFor healthy dogs like Buddy undergoing routine procedures, the statistical risk associated with modern anaesthesia is very low – generally less than 0.05% (Source: AVMA consensus report 2020##i##). We will, of course, call you with an update as soon as he's awake and recovering in our care." 
+            },
+            { 
+                type: 'PO_INPUT', 
+                expectedText: "Thank you so much for the explanation. We'll see you on Tuesday!" 
+            },
+            { 
+                type: 'CB', 
+                text: "We look forward to seeing you and Buddy! Have a wonderful day. 😊" 
+            },
+            { 
+                type: 'END_SCENARIO' 
+            }
+        ];
+    
+        let currentScenarioIndex = 0;
+        let autoSendTimer = null;
+        let firstUserInputActivated = false;
+    
+        function getCurrentTimestamp() {
+            return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+    
+        // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Функция processSources ---
+        function processSources(text) {
+            const sourceRegex = /\s*\(([^)]+?)##i##\)/g; // Добавлен \s* для захвата пробела перед скобкой, если он есть
+            if (!showSources) {
+                // Если источники отключены, полностью удаляем всю конструкцию (Источник: ...##i##)
+                return text.replace(sourceRegex, ''); 
+            }
+            // Если источники включены, создаем кнопку
+            return text.replace(sourceRegex, (match, citationText) => {
+                const tooltipId = `tooltip-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+                const cleanCitationText = citationText.trim().replace(/"/g, '&quot;');
+                // Убираем пробел перед скобкой, если он был, для корректного отображения кнопки
+                const buttonHtml = `<button class="source-button" aria-describedby="${tooltipId}" title="${cleanCitationText}">i<span class="tooltip-text" role="tooltip" id="${tooltipId}">${cleanCitationText}<span class="tooltip-arrow"></span></span></button>`;
+                // Если оригинальный match начинался с пробела, сохраняем этот пробел перед кнопкой
+                return match.startsWith(" (") ? " " + buttonHtml : buttonHtml;
+            });
+        }
+        // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЬ ---
+    
+    
+        function addMessageToChat(text, senderType) {
+            const outerWrapper = document.createElement('div');
+            outerWrapper.classList.add('message-wrapper');
+    
+            if (senderType === 'ai') {
+                outerWrapper.classList.add('ai-message-wrapper');
+                const persona = personaConfig[currentAiPersonaKey];
+    
+                const avatarDiv = document.createElement('div');
+                avatarDiv.classList.add('avatar');
+                if (persona.avatarType === 'image') {
+                    const avatarImg = document.createElement('img');
+                    avatarImg.src = persona.avatarValue;
+                    avatarImg.alt = persona.name + " avatar";
+                    avatarDiv.appendChild(avatarImg);
+                } else { 
+                    avatarDiv.textContent = persona.avatarValue;
+                }
+                outerWrapper.appendChild(avatarDiv);
+    
+                const messageContentWrapper = document.createElement('div');
+                messageContentWrapper.classList.add('message-content-wrapper');
+    
+                const nameDiv = document.createElement('div');
+                nameDiv.classList.add('sender-name');
+                nameDiv.textContent = persona.name;
+                messageContentWrapper.appendChild(nameDiv);
+    
+                if (persona.title) {
+                    const titleDiv = document.createElement('div');
+                    titleDiv.classList.add('sender-title');
+                    titleDiv.textContent = persona.title;
+                    messageContentWrapper.appendChild(titleDiv);
+                }
+    
+                const messageBubbleDiv = document.createElement('div');
+                messageBubbleDiv.classList.add('message', 'ai-message');
+                
+                const textParagraph = document.createElement('p');
+                textParagraph.innerHTML = processSources(text); // Обработка источников
+                messageBubbleDiv.appendChild(textParagraph);
+                
+                messageContentWrapper.appendChild(messageBubbleDiv);
+                outerWrapper.appendChild(messageContentWrapper);
+    
+            } else { // user message
+                outerWrapper.classList.add('user-message-wrapper');
+                const messageBubbleDiv = document.createElement('div');
+                messageBubbleDiv.classList.add('message', 'user-message');
+    
+                const textParagraph = document.createElement('p');
+                textParagraph.textContent = text;
+                messageBubbleDiv.appendChild(textParagraph);
+                outerWrapper.appendChild(messageBubbleDiv);
+            }
+            
+            const bubbleForTimestamp = outerWrapper.querySelector('.message');
+            if (bubbleForTimestamp) {
+                const timestampSpan = document.createElement('span');
+                timestampSpan.classList.add('timestamp');
+                timestampSpan.textContent = getCurrentTimestamp();
+                bubbleForTimestamp.appendChild(timestampSpan);
+            }
+    
+            chatMessagesEl.appendChild(outerWrapper);
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+        }
+    
+        function showTypingIndicator() {
+            const persona = personaConfig[currentAiPersonaKey];
+            const outerWrapper = document.createElement('div');
+            outerWrapper.classList.add('message-wrapper', 'ai-message-wrapper', 'typing-indicator');
+    
+            const avatarDiv = document.createElement('div');
+            avatarDiv.classList.add('avatar');
+            if (persona.avatarType === 'image') {
+                const avatarImg = document.createElement('img');
+                avatarImg.src = persona.avatarValue;
+                avatarImg.alt = persona.name + " avatar";
+                avatarDiv.appendChild(avatarImg);
+            } else { 
+                avatarDiv.textContent = persona.avatarValue;
+            }
+            outerWrapper.appendChild(avatarDiv);
+    
+            const messageContentWrapper = document.createElement('div');
+            messageContentWrapper.classList.add('message-content-wrapper');
+    
+            const nameDiv = document.createElement('div');
+            nameDiv.classList.add('sender-name');
+            nameDiv.textContent = persona.name;
+            messageContentWrapper.appendChild(nameDiv);
+    
+            if (persona.title) {
+                const titleDiv = document.createElement('div');
+                titleDiv.classList.add('sender-title');
+                titleDiv.textContent = persona.title;
+                messageContentWrapper.appendChild(titleDiv);
+            }
+            
+            const messageBubbleDiv = document.createElement('div');
+            messageBubbleDiv.classList.add('message', 'ai-message'); 
+            messageBubbleDiv.innerHTML = `<p>${persona.name} is typing...</p>`;
+            messageContentWrapper.appendChild(messageBubbleDiv);
+            
+            outerWrapper.appendChild(messageContentWrapper);
+    
+            chatMessagesEl.appendChild(outerWrapper);
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+            return outerWrapper; 
+        }
+    
+        function handleNextScenarioStep() {
+            if (currentScenarioIndex >= chatScenario.length) return;
+    
+            const step = chatScenario[currentScenarioIndex];
+            userInputEl.disabled = true;
+            sendButtonEl.disabled = true;
+            clearTimeout(autoSendTimer); 
+    
+            if (step.type === 'GREETING_CB' || step.type === 'CB') {
+                const typingIndicator = showTypingIndicator(); 
+                setTimeout(() => {
+                    if (typingIndicator && typingIndicator.parentNode) {
+                        chatMessagesEl.removeChild(typingIndicator);
+                    }
+                    addMessageToChat(step.text, 'ai'); 
+                    currentScenarioIndex++;
+                    if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'PO_INPUT') {
+                        userInputEl.value = chatScenario[currentScenarioIndex].expectedText; 
+                        userInputEl.disabled = false;
+                        sendButtonEl.disabled = !userInputEl.value.trim();
+                        userInputEl.focus();
+                        userInputEl.style.height = 'auto'; 
+                        userInputEl.style.height = (userInputEl.scrollHeight) + 'px'; 
+                        
+                        if (!firstUserInputActivated && sendButtonEl && !sendButtonEl.disabled) {
+                            sendButtonEl.classList.add('highlight-send-button');
+                            firstUserInputActivated = true; 
+                            setTimeout(() => {
+                                sendButtonEl.classList.remove('highlight-send-button');
+                            }, 3500); 
+                        }
+                        
+                        autoSendTimer = setTimeout(() => {
+                            if (!sendButtonEl.disabled) { 
+                                handleSendMessage();
+                            }
+                        }, 40000); 
+                    } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
+                        handleNextScenarioStep(); 
+                    } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
+                        handleNextScenarioStep(); 
+                    }
+                }, 3000 + Math.random() * 4000); 
+            } else if (step.type === 'END_SCENARIO') {
+                userInputEl.placeholder = "Consultation ended.";
+                setTimeout(() => { 
+                    endScenarioOverlayEl.style.display = 'flex';
+                }, 1000);
+            }
+        }
+    
+        function handleSendMessage() {
+            const messageText = userInputEl.value.trim();
+            if (!messageText) return;
+    
+            if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'PO_INPUT') {
+                clearTimeout(autoSendTimer); 
+                addMessageToChat(messageText, 'user'); 
+                userInputEl.value = '';
+                userInputEl.style.height = 'auto';
+                sendButtonEl.disabled = true;
+                userInputEl.disabled = true;
+                sendButtonEl.classList.remove('highlight-send-button');
+                
+                currentScenarioIndex++; 
+                handleNextScenarioStep();
+            }
+        }
+    
+        userInputEl.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            const canEnableSend = this.value.trim() && currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'PO_INPUT';
+            sendButtonEl.disabled = !canEnableSend;
+    
+            if (canEnableSend && !firstUserInputActivated && sendButtonEl) {
+                 sendButtonEl.classList.add('highlight-send-button');
+                 firstUserInputActivated = true; 
+                 setTimeout(() => {
+                     sendButtonEl.classList.remove('highlight-send-button');
+                 }, 3500);
+            }
+        });
+    
+        sendButtonEl.addEventListener('click', handleSendMessage);
+        userInputEl.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                if (!sendButtonEl.disabled) {
+                    handleSendMessage();
+                }
+            }
+        });
+    
+        closeModalButtonEl.addEventListener('click', () => {
+            endScenarioOverlayEl.style.display = 'none';
+        });
+        
+        // Mobile menu toggle
+    if (mobileMenuToggleEl && mainNavEl) {
+        mobileMenuToggleEl.addEventListener('click', () => {
+            const isActive = mainNavEl.classList.toggle('mobile-active');
+            mobileMenuToggleEl.classList.toggle('active', isActive);
+            mobileMenuToggleEl.innerHTML = isActive ? '&#x2715;' : '&#9776;'; // Крестик и бургер
+            // Опционально: блокировать прокрутку страницы при открытом меню
+            document.body.style.overflow = isActive ? 'hidden' : ''; 
+
+            // Закрытие меню по клику на ссылку (для одностраничных переходов или якорей)
+            if (isActive) {
+                mainNavEl.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mainNavEl.classList.remove('mobile-active');
+                        mobileMenuToggleEl.classList.remove('active');
+                        mobileMenuToggleEl.innerHTML = '&#9776;';
+                        document.body.style.overflow = '';
+                    }, { once: true }); // Сработает один раз и удалится
+                });
+            }
+        });
+    }
+    
+        // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Логика скрытых контролов ---
+        // Event listeners for internal controls to update JS variables if controls are changed (e.g., during testing if made visible)
+        personaToggleInternalEl.addEventListener('change', (event) => {
+            currentAiPersonaKey = event.target.value;
+        });
+        sourcesToggleInternalEl.addEventListener('change', (event) => {
+            showSources = event.target.checked;
+        });
+        
+        // This function now SETS the hidden controls based on JS variables
+        // and is called ONCE on page load.
+        function initializeDefaultSettings() {
+            // currentAiPersonaKey and showSources are already set by their 'let' statements.
+            // Now, update the hidden HTML controls to reflect these JS default values.
+            if (personaToggleInternalEl) {
+                personaToggleInternalEl.value = currentAiPersonaKey;
+            }
+            if (sourcesToggleInternalEl) {
+                sourcesToggleInternalEl.checked = showSources;
+            }
+        }
+        // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЬ ---
+    
+        // Initialize chat
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDefaultSettings(); // Apply JS defaults to hidden controls & ensure variables are correctly set.
+            handleNextScenarioStep(); 
+        });
+    </script>
+</body>
+</html>
