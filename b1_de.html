@@ -753,7 +753,7 @@
             <div class="chat-messages" id="chatMessages">
                 </div>
             <div class="chat-input-area">
-                <textarea id="userInput" placeholder="Write your message..." rows="1" disabled></textarea>
+                <textarea id="userInput" placeholder="Schreiben Sie Ihre Nachricht..." rows="1" disabled></textarea>
                 <button id="sendButton" title="Send" disabled>
                     <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
                 </button>
@@ -801,8 +801,8 @@
 
     <div class="end-scenario-overlay" id="endScenarioOverlay">
         <div class="end-scenario-modal">
-            <p>The consultation has ended. You can now return or close this window.</p>
-            <button id="closeModalButton">Close</button>
+            <p>Die Beratung ist beendet. Sie können jetzt zurückkehren oder dieses Fenster schließen.</p>
+            <button id="closeModalButton">Schließen</button>
         </div>
     </div>
 
@@ -824,7 +824,7 @@
         const personaConfig = {
             bot: {
                 name: "Zähnchen Bot",
-                title: "AI Dental Assistant | TierZanhZentrum",
+                title: "KI Zahn-Assistent | TierZahnZentrum",
                 avatarType: "emoji", 
                 avatarValue: "🤖" 
             },
@@ -838,67 +838,66 @@
     
         // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Установка значений по умолчанию ---
         // Чтобы управлять поведением по умолчанию, меняйте значения именно этих двух переменных:
-        let currentAiPersonaKey = 'human'; // Установите 'bot' или 'human'. Сейчас по умолчанию 'bot'.
+        let currentAiPersonaKey = 'bot'; // Установите 'bot' или 'human'. Сейчас по умолчанию 'bot'.
                                          // Комментарий: 'Default AI persona. Options: 'human' (Lena Bauer) or 'bot' (VetBot)'
-        let showSources = false;         // Установите true (показывать) или false (скрывать). Сейчас по умолчанию false (скрыты).
+        let showSources = true;         // Установите true (показывать) или false (скрывать). Сейчас по умолчанию false (скрыты).
                                          // Комментарий: 'Default source visibility. Options: true (show) or false (hide)'
         // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЯ ---
     
     
-        // Chat Scenario Definition (остается ваш "Humanized Dialogue")
         const chatScenario = [
-            { 
-                type: 'GREETING_CB', 
-                text: "Hello! 😊 Thank you for contacting TierZahnZentrum. How can I assist you today?" 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Hi! I just wanted to quickly confirm Buddy’s dental cleaning appointment for Wednesday 16 June at 10:30 with Dr Haas?" 
-            },
-            { 
-                type: 'CB', 
-                text: "Certainly! Let me just pull up Buddy's appointment details for you. One moment, please..." 
-            },
-            { 
-                type: 'CB', 
-                text: "Okay, I've got it here. Yes, Buddy is all set for his dental cleaning with Dr. Haas on Wednesday, June 16th, at 10:30 AM at our Munich clinic (Verified in Internal Appointment Management System##i##). We're looking forward to seeing him! Should anything change on your end, or if you need to reschedule, please don't hesitate to reply to this message or call us directly at 089-413 292 351 (Source: Clinic Contact Directory##i##)." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Perfect, thanks! Do I need to do anything special before we come in? Like food or water restrictions?" 
-            },
-            { 
-                type: 'CB', 
-                text: "Proper preparation is key for a smooth procedure. Here’s what we generally recommend(Source: Pet Owner Pre-Op Guidelines, revised March 2024##i##):\n\n• Please ensure Buddy has no food after midnight the night before his appointment. This is very important for the anaesthesia.\n• He can have access to water until about 6:00 AM on the morning of the procedure.\n• A short, calm walk before you head to the clinic will help him feel more comfortable and allow him to relieve himself.\n• And a really important point, especially for procedures under anaesthesia, is to keep Buddy warm on his way to us. Using a cozy blanket or an insulated carrier can make a significant difference in preventing anaesthetic hypothermia (Source: Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024##i##). This helps ensure he stays comfortable and safe." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Interesting about the warmth. Why is temperature so important for a dental cleaning?" 
-            },
-            { 
-                type: 'CB', 
-                text: "It's a very important! When pets are under general anaesthesia, their natural ability to regulate body temperature is reduced and they can lose heat rapidly. This can lead to a condition called hypothermia, which might slow down their recovery process and increase the risk of complications. In dogs, the most pronounced drop (≈ 1 °C) occurs within the first 15 min after induction(Source: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Active warming in our clinic significantly attenuates this decline and lowers the incidence of peri-anaesthetic hypothermia(Source: Internal Clinic Protocol 09.10, last reviewed March 2024##i##). Our priority is to maintain a stable core body temperature for Buddy, ideally between 37 and 38 degrees Celsius(Source: MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023##i##). This supports good circulation and helps their bodies metabolise the anaesthetic drugs effectively and recover more smoothly." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Got it, that makes sense. Thanks. To be honest, I'm still a little nervous about the anaesthesia itself. How risky is it generally?" 
-            },
-            { 
-                type: 'CB', 
-                text: "Before any procedure, Dr. Haas will perform a pre-anaesthetic examination of Buddy to ensure he's a good candidate. We then use our anaesthesia protocols, and throughout the entire procedure, Buddy will be monitored by a dedicated member of our veterinary team. This includes continuous real-time monitoring of his ECG (heart rhythm), blood pressure, oxygen saturation (SpO2), respiratory function via capnography (CO2 levels), and core body temperature, with readings documented at least every 5 minutes(Source: Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024##i##). \n\nFor healthy dogs like Buddy undergoing routine procedures, the statistical risk associated with modern anaesthesia is very low – generally less than 0.05%(Source: AVMA Anaesthesia Safety Report, 2020##i##). We will, of course, call you with an update as soon as he's awake and recovering in our care." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Thank you so much for the explanation. We'll see you on Wednesday!" 
-            },
-            { 
-                type: 'CB', 
-                text: "We look forward to seeing you and Buddy! Have a wonderful day. 😊" 
-            },
-            { 
-                type: 'END_SCENARIO' 
-            }
-        ];
+    {
+        type: 'GREETING_CB',
+        text: "Hallo! 😊 Vielen Dank, dass Sie das TierZahnZentrum kontaktiert haben. Wie kann ich Ihnen heute behilflich sein?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Hallo! Ich wollte nur kurz Buddy's Zahnreinigungstermin für Dienstag, den 16. Juni um 10:30 Uhr bei Dr. Haas bestätigen lassen?"
+    },
+    {
+        type: 'CB',
+        text: "Selbstverständlich! Lassen Sie mich kurz Buddy's Termindetails für Sie aufrufen. Einen Moment, bitte..."
+    },
+    {
+        type: 'CB',
+        text: "Okay, ich hab's hier. Ja, für Buddy ist alles klar für seine Zahnreinigung bei Dr. Haas am Dienstag, den 16. Juni, um 10:30 Uhr in unserer Münchner Klinik (Verifiziert im internen Terminverwaltungssystem##i##). Wir freuen uns schon auf ihn! Sollte sich bei Ihnen etwas ändern oder wenn Sie den Termin verschieben müssen, zögern Sie bitte nicht, auf diese Nachricht zu antworten oder uns direkt unter 089-413 292 351 anzurufen (Quelle: Klinik-Kontaktverzeichnis##i##)."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Perfekt, danke! Muss ich irgendetwas Besonderes beachten, bevor wir kommen? Zum Beispiel Futter- oder Wassereinschränkungen?"
+    },
+    {
+        type: 'CB',
+        text: "Eine gute Vorbereitung ist entscheidend für einen reibungslosen Ablauf. Hier ist, was wir generell empfehlen (Quelle: Präoperative Richtlinien für Tierbesitzer, überarbeitet März 2024##i##):\n\n• Bitte stellen Sie sicher, dass Buddy nach Mitternacht vor seinem Termin nichts mehr frisst. Das ist sehr wichtig für die Narkose.\n• Wasser darf er bis ca. 6:00 Uhr morgens am Tag des Eingriffs haben.\n• Ein kurzer, ruhiger Spaziergang, bevor Sie zur Klinik kommen, hilft ihm, sich wohler zu fühlen und sich zu lösen.\n• Und ein wirklich wichtiger Punkt, besonders bei Eingriffen unter Narkose, ist, Buddy auf dem Weg zu uns warm zu halten. Eine kuschelige Decke oder eine isolierte Transportbox können einen erheblichen Unterschied machen, um eine Narkose-Hypothermie zu verhindern (Quelle: Richtlinien zur Prävention von Narkose-Hypothermie, Veterinär-Anästhesie-Verband, 2024##i##). Das hilft sicherzustellen, dass er sich wohlfühlt und sicher ist."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Interessant das mit der Wärme. Warum ist die Temperatur bei einer Zahnreinigung so wichtig?"
+    },
+    {
+        type: 'CB',
+        text: "Das ist in der Tat sehr wichtig! Wenn Haustiere unter Vollnarkose stehen, ist ihre natürliche Fähigkeit zur Regulierung der Körpertemperatur herabgesetzt und sie können schnell Wärme verlieren. Dies kann zu einem Zustand namens Hypothermie führen, der ihren Genesungsprozess verlangsamen und das Risiko von Komplikationen erhöhen kann. Bei Hunden tritt der stärkste Abfall (≈ 1 °C) innerhalb der ersten 15 Minuten nach der Einleitung auf (Quelle: Kudo, A. et al. Periphere Erwärmung zur Prävention von Hypothermie bei kleinen Hunden, 2024##i##). Aktives Wärmen in unserer Klinik schwächt diesen Abfall deutlich ab und senkt die Häufigkeit von peri-narkotischer Hypothermie (Quelle: Internes Klinikprotokoll 09.10, zuletzt überprüft März 2024##i##). Unsere Priorität ist es, eine stabile Körperkerntemperatur für Buddy aufrechtzuerhalten, idealerweise zwischen 37 und 38 Grad Celsius (Quelle: MSD Veterinary Manual, Kapitel 15: Narkosemanagement, 2023##i##). Dies unterstützt eine gute Durchblutung und hilft ihrem Körper, die Narkosemittel effektiv zu verstoffwechseln und sich reibungsloser zu erholen."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Verstanden, das leuchtet ein. Danke. Ehrlich gesagt, bin ich immer noch ein bisschen nervös wegen der Narkose selbst. Wie riskant ist sie denn im Allgemeinen?"
+    },
+    {
+        type: 'CB',
+        text: "Vor jedem Eingriff wird Dr. Haas eine präanästhetische Untersuchung bei Buddy durchführen, um sicherzustellen, dass er ein geeigneter Kandidat ist. Wir verwenden dann unsere Narkoseprotokolle, und während des gesamten Eingriffs wird Buddy von einem engagierten Mitglied unseres Tierärzteteams überwacht. Dies beinhaltet die kontinuierliche Echtzeitüberwachung seines EKGs (Herzrhythmus), Blutdrucks, seiner Sauerstoffsättigung (SpO2), Atemfunktion mittels Kapnographie (CO2-Werte) und Körperkerntemperatur, wobei die Werte mindestens alle 5 Minuten dokumentiert werden (Quelle: Klinikstandards Narkoseüberwachung, Protokoll Nr. 5.10, aktualisiert Februar 2024##i##). \n\nBei gesunden Hunden wie Buddy, die sich Routineeingriffen unterziehen, ist das statistische Risiko moderner Narkoseverfahren sehr gering – im Allgemeinen weniger als 0,05% (Quelle: AVMA Sicherheitsbericht Narkose, 2020##i##). Selbstverständlich rufen wir Sie an, sobald er aufgewacht ist und sich bei uns in der Obhut erholt."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Vielen Dank für die ausführliche Erklärung. Dann sehen wir uns am Dienstag!"
+    },
+    {
+        type: 'CB',
+        text: "Wir freuen uns auf Sie und Buddy! Einen schönen Tag noch. 😊"
+    },
+    {
+        type: 'END_SCENARIO'
+    }
+];
     
         let currentScenarioIndex = 0;
         let autoSendTimer = null;
@@ -1030,7 +1029,7 @@
             
             const messageBubbleDiv = document.createElement('div');
             messageBubbleDiv.classList.add('message', 'ai-message'); 
-            messageBubbleDiv.innerHTML = `<p>${persona.name} is typing...</p>`;
+            messageBubbleDiv.innerHTML = `<p>${persona.name} schreibt...</p>`;
             messageContentWrapper.appendChild(messageBubbleDiv);
             
             outerWrapper.appendChild(messageContentWrapper);
@@ -1076,15 +1075,15 @@
                             if (!sendButtonEl.disabled) { 
                                 handleSendMessage();
                             }
-                        }, 60000); 
+                        }, 40000); 
                     } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
                         handleNextScenarioStep(); 
                     } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
                         handleNextScenarioStep(); 
                     }
-                }, 3000 + Math.random() * 6000); 
+                }, 3000 + Math.random() * 4000); 
             } else if (step.type === 'END_SCENARIO') {
-                userInputEl.placeholder = "Consultation ended.";
+                userInputEl.placeholder = "Beratung beendet.";
                 setTimeout(() => { 
                     endScenarioOverlayEl.style.display = 'flex';
                 }, 1000);
