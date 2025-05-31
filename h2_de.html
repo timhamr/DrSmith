@@ -846,30 +846,30 @@
         // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЯ ---
     
     
-        const chatScenario = [
+const chatScenario = [
     {
         type: 'GREETING_CB',
-        text: "Hallo! 😊 Vielen Dank, dass Sie das TierZahnZentrum kontaktiert haben. Wie kann ich Ihnen heute behilflich sein?"
+        text: "Hallo! 😊 Danke, dass Sie das TierZahnZentrum kontaktiert haben. Wie kann ich Ihnen helfen?"
     },
     {
         type: 'PO_INPUT',
-        expectedText: "Hallo! Ich wollte nur kurz Buddy's Zahnreinigungstermin für Dienstag, den 16. Juni um 10:30 Uhr bei Dr. Haas bestätigen lassen?"
+        expectedText: "Hallo! Kann ich Buddys Zahnreinigungstermin für Mittwoch, den 16. Juni um 10:30 Uhr bei Dr. Haas bestätigen?"
     },
     {
         type: 'CB',
-        text: "Selbstverständlich! Lassen Sie mich kurz Buddy's Termindetails für Sie aufrufen. Einen Moment, bitte..."
+        text: "Sicher! Lassen Sie mich Buddys Termindetails prüfen. Einen Moment, bitte..."
     },
     {
         type: 'CB',
-        text: "Okay, ich hab's hier. Ja, für Buddy ist alles klar für seine Zahnreinigung bei Dr. Haas am Dienstag, den 16. Juni, um 10:30 Uhr in unserer Münchner Klinik (Verifiziert im internen Terminverwaltungssystem##i##). Wir freuen uns schon auf ihn! Sollte sich bei Ihnen etwas ändern oder wenn Sie den Termin verschieben müssen, zögern Sie bitte nicht, auf diese Nachricht zu antworten oder uns direkt unter 089-413 292 351 anzurufen (Quelle: Klinik-Kontaktverzeichnis##i##)."
+        text: "Okay, gefunden. Ja, Buddy ist für seine Zahnreinigung bei Dr. Haas am Mittwoch, den 16. Juni, um 10:30 Uhr in unserer Münchner Klinik bestätigt (Verifiziert im internen Terminverwaltungssystem##i##). Wir freuen uns auf ihn! Falls sich etwas ändert oder Sie umbuchen müssen, antworten Sie bitte hier oder rufen Sie uns unter 089-413 292 351 an (Source: Clinic Contact Directory##i##)."
     },
     {
         type: 'PO_INPUT',
-        expectedText: "Perfekt, danke! Muss ich irgendetwas Besonderes beachten, bevor wir kommen? Zum Beispiel Futter- oder Wassereinschränkungen?"
+        expectedText: "Perfekt, danke! Gibt es spezielle Anweisungen vor dem Termin, wie Futter- oder Wasserbeschränkungen?"
     },
     {
         type: 'CB',
-        text: "Eine gute Vorbereitung ist entscheidend für einen reibungslosen Ablauf. Hier ist, was wir generell empfehlen (Quelle: Präoperative Richtlinien für Tierbesitzer, überarbeitet März 2024##i##):\n\n• Bitte stellen Sie sicher, dass Buddy nach Mitternacht vor seinem Termin nichts mehr frisst. Das ist sehr wichtig für die Narkose.\n• Wasser darf er bis ca. 6:00 Uhr morgens am Tag des Eingriffs haben.\n• Ein kurzer, ruhiger Spaziergang, bevor Sie zur Klinik kommen, hilft ihm, sich wohler zu fühlen und sich zu lösen.\n• Und ein wirklich wichtiger Punkt, besonders bei Eingriffen unter Narkose, ist, Buddy auf dem Weg zu uns warm zu halten. Eine kuschelige Decke oder eine isolierte Transportbox können einen erheblichen Unterschied machen, um eine Narkose-Hypothermie zu verhindern (Quelle: Richtlinien zur Prävention von Narkose-Hypothermie, Veterinär-Anästhesie-Verband, 2024##i##). Das hilft sicherzustellen, dass er sich wohlfühlt und sicher ist."
+        text: "Gute Vorbereitung ist entscheidend. Wir empfehlen generell (Source: Pet Owner Pre-Op Guidelines, revised March 2024##i##):\n\n• Kein Futter für Buddy nach Mitternacht vor seinem Termin (entscheidend für die Narkose).\n• Wasser ist bis ca. 6:00 Uhr morgens am Tag des Eingriffs in Ordnung.\n• Ein kurzer, ruhiger Spaziergang vor dem Klinikbesuch hilft ihm, sich zu entspannen und zu lösen.\n• Wichtig für die Narkose: Halten Sie Buddy auf dem Weg warm. Eine Kuscheldecke oder eine isolierte Transportbox beugt Unterkühlung vor und sorgt für Komfort und Sicherheit (Source: Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024##i##)."
     },
     {
         type: 'PO_INPUT',
@@ -877,23 +877,23 @@
     },
     {
         type: 'CB',
-        text: "Das ist in der Tat sehr wichtig! Wenn Haustiere unter Vollnarkose stehen, ist ihre natürliche Fähigkeit zur Regulierung der Körpertemperatur herabgesetzt und sie können schnell Wärme verlieren. Dies kann zu einem Zustand namens Hypothermie führen, der ihren Genesungsprozess verlangsamen und das Risiko von Komplikationen erhöhen kann. Bei Hunden tritt der stärkste Abfall (≈ 1 °C) innerhalb der ersten 15 Minuten nach der Einleitung auf (Quelle: Kudo, A. et al. Periphere Erwärmung zur Prävention von Hypothermie bei kleinen Hunden, 2024##i##). Aktives Wärmen in unserer Klinik schwächt diesen Abfall deutlich ab und senkt die Häufigkeit von peri-narkotischer Hypothermie (Quelle: Internes Klinikprotokoll 09.10, zuletzt überprüft März 2024##i##). Unsere Priorität ist es, eine stabile Körperkerntemperatur für Buddy aufrechtzuerhalten, idealerweise zwischen 37 und 38 Grad Celsius (Quelle: MSD Veterinary Manual, Kapitel 15: Narkosemanagement, 2023##i##). Dies unterstützt eine gute Durchblutung und hilft ihrem Körper, die Narkosemittel effektiv zu verstoffwechseln und sich reibungsloser zu erholen."
+        text: "Das ist sehr wichtig! Unter Vollnarkose können Haustiere ihre Körpertemperatur schlecht regulieren und verlieren schnell Wärme, was zu Unterkühlung führen kann. Dies kann die Genesung verlangsamen und das Risiko von Komplikationen nach dem Eingriff erhöhen. Hunde zeigen oft einen deutlichen Temperaturabfall (ca. 1°C) in den ersten 15 Minuten nach der Narkoseeinleitung (Source: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Aktives Wärmen in unserer Klinik reduziert diesen Abfall und die Häufigkeit von Unterkühlungen erheblich (Source: Internes Klinikprotokoll 09.10, zuletzt überprüft März 2024##i##). Wir legen größten Wert darauf, Buddys Körperkerntemperatur stabil zu halten (idealerweise 37-38°C) (Source: MSD Veterinary Manual, Kapitel 15: Narkosemanagement, 2023##i##) für eine gute Durchblutung, effizienten Medikamentenstoffwechsel und sanftere Erholung – deshalb bitten wir Sie, Buddy warm zu halten, bevor Sie ihn in die Klinik bringen."
     },
     {
         type: 'PO_INPUT',
-        expectedText: "Verstanden, das leuchtet ein. Danke. Ehrlich gesagt, bin ich immer noch ein bisschen nervös wegen der Narkose selbst. Wie riskant ist sie denn im Allgemeinen?"
+        expectedText: "Verstanden, danke. Ich bin immer noch etwas nervös wegen der Narkose. Was sind die allgemeinen Risiken?"
     },
     {
         type: 'CB',
-        text: "Vor jedem Eingriff wird Dr. Haas eine präanästhetische Untersuchung bei Buddy durchführen, um sicherzustellen, dass er ein geeigneter Kandidat ist. Wir verwenden dann unsere Narkoseprotokolle, und während des gesamten Eingriffs wird Buddy von einem engagierten Mitglied unseres Tierärzteteams überwacht. Dies beinhaltet die kontinuierliche Echtzeitüberwachung seines EKGs (Herzrhythmus), Blutdrucks, seiner Sauerstoffsättigung (SpO2), Atemfunktion mittels Kapnographie (CO2-Werte) und Körperkerntemperatur, wobei die Werte mindestens alle 5 Minuten dokumentiert werden (Quelle: Klinikstandards Narkoseüberwachung, Protokoll Nr. 5.10, aktualisiert Februar 2024##i##). \n\nBei gesunden Hunden wie Buddy, die sich Routineeingriffen unterziehen, ist das statistische Risiko moderner Narkoseverfahren sehr gering – im Allgemeinen weniger als 0,05% (Quelle: AVMA Sicherheitsbericht Narkose, 2020##i##). Selbstverständlich rufen wir Sie an, sobald er aufgewacht ist und sich bei uns in der Obhut erholt."
+        text: "Dr. Haas wird Buddy vorab untersuchen, um seine Narkosetauglichkeit zu bestätigen. Wir befolgen strenge Narkoseprotokolle, und ein engagiertes Teammitglied überwacht kontinuierlich sein EKG, Blutdruck, SpO2, Kapnographie (CO2) und Körperkerntemperatur und dokumentiert die Werte alle 5 Minuten (Source: Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024##i##).\n\nFür gesunde Hunde wie Buddy bei Routineeingriffen ist das Risiko moderner Narkoseverfahren sehr gering (unter 0,05%) (Source: AVMA Sicherheitsbericht Narkose, 2020##i##). Wir rufen Sie an, sobald er wach ist und sich erholt."
     },
     {
         type: 'PO_INPUT',
-        expectedText: "Vielen Dank für die ausführliche Erklärung. Dann sehen wir uns am Dienstag!"
+        expectedText: "Danke für die Erklärung! Bis Mittwoch."
     },
     {
         type: 'CB',
-        text: "Wir freuen uns auf Sie und Buddy! Einen schönen Tag noch. 😊"
+        text: "Wir freuen uns auf Sie und Buddy! Einen schönen Tag. 😊"
     },
     {
         type: 'END_SCENARIO'
