@@ -848,58 +848,58 @@
     
         // Chat Scenario Definition (остается ваш "Humanized Dialogue")
         const chatScenario = [
-            { 
-                type: 'GREETING_CB', 
-                text: "Hello! 😊 Thank you for contacting TierZahnZentrum. How can I assist you today?" 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Hi! I just wanted to quickly confirm Buddy’s dental cleaning appointment for Wednesday 16 June at 10:30 with Dr Haas?" 
-            },
-            { 
-                type: 'CB', 
-                text: "Certainly! Let me just pull up Buddy's appointment details for you. One moment, please..." 
-            },
-            { 
-                type: 'CB', 
-                text: "Okay, I've got it here. Yes, Buddy is all set for his dental cleaning with Dr. Haas on Wednesday, June 16th, at 10:30 AM at our Munich clinic (Verified in Internal Appointment Management System##i##). We're looking forward to seeing him! Should anything change on your end, or if you need to reschedule, please don't hesitate to reply to this message or call us directly at 089-413 292 351 (Source: Clinic Contact Directory##i##)." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Perfect, thanks! Do I need to do anything special before we come in? Like food or water restrictions?" 
-            },
-            { 
-                type: 'CB', 
-                text: "Proper preparation is key for a smooth procedure. Here’s what we generally recommend(Source: Pet Owner Pre-Op Guidelines, revised March 2024##i##):\n\n• Please ensure Buddy has no food after midnight the night before his appointment. This is very important for the anaesthesia.\n• He can have access to water until about 6:00 AM on the morning of the procedure.\n• A short, calm walk before you head to the clinic will help him feel more comfortable and allow him to relieve himself.\n• And a really important point, especially for procedures under anaesthesia, is to keep Buddy warm on his way to us. Using a cozy blanket or an insulated carrier can make a significant difference in preventing anaesthetic hypothermia (Source: Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024##i##). This helps ensure he stays comfortable and safe." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Interesting about the warmth. Why is temperature so important for a dental cleaning?" 
-            },
-            { 
-                type: 'CB', 
-                text: "It's a very important! When pets are under general anaesthesia, their natural ability to regulate body temperature is reduced and they can lose heat rapidly. This can lead to a condition called hypothermia, which might slow down their recovery process and increase the risk of complications. In dogs, the most pronounced drop (≈ 1 °C) occurs within the first 15 min after induction(Source: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Active warming in our clinic significantly attenuates this decline and lowers the incidence of peri-anaesthetic hypothermia(Source: Internal Clinic Protocol 09.10, last reviewed March 2024##i##). Our priority is to maintain a stable core body temperature for Buddy, ideally between 37 and 38 degrees Celsius(Source: MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023##i##). This supports good circulation and helps their bodies metabolise the anaesthetic drugs effectively and recover more smoothly." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Got it, that makes sense. Thanks. To be honest, I'm still a little nervous about the anaesthesia itself. How risky is it generally?" 
-            },
-            { 
-                type: 'CB', 
-                text: "Before any procedure, Dr. Haas will perform a pre-anaesthetic examination of Buddy to ensure he's a good candidate. We then use our anaesthesia protocols, and throughout the entire procedure, Buddy will be monitored by a dedicated member of our veterinary team. This includes continuous real-time monitoring of his ECG (heart rhythm), blood pressure, oxygen saturation (SpO2), respiratory function via capnography (CO2 levels), and core body temperature, with readings documented at least every 5 minutes(Source: Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024##i##). \n\nFor healthy dogs like Buddy undergoing routine procedures, the statistical risk associated with modern anaesthesia is very low – generally less than 0.05%(Source: AVMA Anaesthesia Safety Report, 2020##i##). We will, of course, call you with an update as soon as he's awake and recovering in our care." 
-            },
-            { 
-                type: 'PO_INPUT', 
-                expectedText: "Thank you so much for the explanation. We'll see you on Wednesday!" 
-            },
-            { 
-                type: 'CB', 
-                text: "We look forward to seeing you and Buddy! Have a wonderful day. 😊" 
-            },
-            { 
-                type: 'END_SCENARIO' 
-            }
-        ];
+    {
+        type: 'GREETING_CB',
+        text: "Hello! 😊 Thanks for contacting TierZahnZentrum. How can I help you?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Hi! Can I confirm Buddy’s dental cleaning for Wednesday, June 16th at 10:30 AM with Dr. Haas?"
+    },
+    {
+        type: 'CB',
+        text: "Certainly! Let me check Buddy's appointment details. One moment..."
+    },
+    {
+        type: 'CB',
+        text: "Okay, found it. Yes, Buddy is confirmed for his dental cleaning with Dr. Haas on Wednesday, June 16th, 10:30 AM at our Munich clinic (Verified in Internal Appointment Management System##i##). We look forward to seeing him! If anything changes or you need to reschedule, please reply here or call us at 089-413 292 351 (Source: Clinic Contact Directory##i##)."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Perfect, thanks! Are there any pre-appointment instructions, like food or water restrictions?"
+    },
+    {
+        type: 'CB',
+        text: "Good preparation is key. We generally recommend (Source: Pet Owner Pre-Op Guidelines, revised March 2024##i##):\n\n• No food for Buddy after midnight before his appointment (crucial for anaesthesia).\n• Water is okay until about 6:00 AM on procedure day.\n• A short, calm walk before coming to the clinic helps him relax and relieve himself.\n• Importantly for anaesthesia, keep Buddy warm en route. A cozy blanket or insulated carrier helps prevent hypothermia and keeps him comfortable and safe (Source: Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024##i##)."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Interesting about warmth. Why is temperature crucial for dental cleaning?"
+    },
+    {
+        type: 'CB',
+        text: "It's very important! Under general anaesthesia, pets can't regulate body temperature well and lose heat fast, risking hypothermia. This can slow recovery and raise complication risks. Dogs often see a significant temperature drop (≈ 1°C) in the first 15 minutes post-induction (Source: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Our clinic's active warming greatly reduces this drop and the incidence of hypothermia (Source: Internal Clinic Protocol 09.10, last reviewed March 2024##i##). We prioritize keeping Buddy's core temperature stable (ideally 37-38°C) (Source: MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023##i##) for good circulation, efficient drug metabolism, and smoother recovery."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Understood, thanks. I'm still a bit nervous about anaesthesia. What are the general risks?"
+    },
+    {
+        type: 'CB',
+        text: "Dr. Haas will do a pre-anaesthetic exam on Buddy to confirm suitability. We follow strict anaesthesia protocols, and a dedicated team member continuously monitors his ECG, blood pressure, SpO2, capnography (CO2), and core temperature, documenting readings every 5 minutes (Source: Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024##i##).\n\nFor healthy dogs like Buddy in routine procedures, modern anaesthesia risk is very low (under 0.05%) (Source: AVMA Anaesthesia Safety Report, 2020##i##). We'll call you once he's awake and recovering."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Thanks for explaining! See you Wednesday."
+    },
+    {
+        type: 'CB',
+        text: "Looking forward to seeing you and Buddy! Have a great day. 😊"
+    },
+    {
+        type: 'END_SCENARIO'
+    }
+];
     
         let currentScenarioIndex = 0;
         let autoSendTimer = null;
