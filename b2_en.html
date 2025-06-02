@@ -688,6 +688,35 @@
 
 }
 /* --- КОНЕЦ НОВЫХ СТИЛЕЙ ДЛЯ FOOTER --- */
+/* === Profile card shown before chat starts ====================== */
+.persona-profile-card{
+    text-align:center;
+    padding:32px 24px;
+    border:2px solid var(--border-color);
+    border-radius:12px;
+    margin-bottom:20px;                 /* keeps distance to first message */
+}
+.persona-profile-card .profile-heading{
+    font-weight:600;
+    color:var(--primary-color);
+    margin:0 0 12px;
+    font-size:1.1rem;
+}
+.persona-profile-card .profile-photo{
+    width:96px;height:96px;
+    margin:0 auto 12px;
+    border-radius:50%;
+    overflow:hidden;
+}
+.persona-profile-card .profile-photo img{width:100%;height:100%;object-fit:cover}
+.persona-profile-card .profile-emoji{font-size:72px;line-height:1}
+.persona-profile-card .profile-name{margin:0;font-size:1.25rem}
+.persona-profile-card .profile-title{
+    margin:4px 0 0;
+    font-size:.9rem;
+    color:var(--text-color-secondary);
+}
+/* =============================================================== */
 
         /* End Scenario Modal (condensed for brevity) */
         .end-scenario-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
@@ -752,6 +781,8 @@
     <div class="chat-page-wrapper">
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
+                <!-- Profile card will be injected here -->
+                <div id="profileCardMount"></div>
                 </div>
             <div class="chat-input-area">
                 <textarea id="userInput" placeholder="Write your message..." rows="1" disabled></textarea>
@@ -831,12 +862,39 @@
             },
             human: {
                 name: "Lena Bauer",
-                title: "Tierärztliche Fachangestellte | TierZanhZentrum", // Veterinary Assistant
+                title: "Veterinary assistant | TierZanhZentrum", // Veterinary Assistant
                 avatarType: "image",
                 avatarValue: "https://tierzahnzentrum.com/wp-content/uploads/Franziska-Iwanowski-Portraet-1.jpg"
             }
         };
-    
+    /* ---------- Profile Card helper (adds one card, then leaves it) ------------ */
+function showPersonaProfileCard(){
+    const persona = personaConfig[currentAiPersonaKey];
+
+    // Build card container
+    const card = document.createElement('div');
+    card.classList.add('persona-profile-card');
+
+    card.innerHTML = `
+        <p class="profile-heading">
+            ${currentAiPersonaKey==='human'
+                ? 'You’re now connected with a <span class="badge-human">live specialist</span>:'
+                : 'You’re now connected with an AI assistant:'}
+        </p>
+        <div class="profile-photo">
+            ${persona.avatarType==='image'
+                ? `<img src="${persona.avatarValue}" alt="${persona.name}">`
+                : `<span class="profile-emoji">${persona.avatarValue}</span>`}
+        </div>
+        <h3 class="profile-name">${persona.name}</h3>
+        <p class="profile-title">${persona.title}</p>
+    `;
+
+    /* Mount either in the stub (if present) or at the end of messages */
+    (document.getElementById('profileCardMount') || chatMessagesEl).appendChild(card);
+}
+/* -------------------------------------------------------------------------- */
+
         // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Установка значений по умолчанию ---
         // Чтобы управлять поведением по умолчанию, меняйте значения именно этих двух переменных:
         let currentAiPersonaKey = 'bot'; // Установите 'bot' или 'human'. Сейчас по умолчанию 'bot'.
@@ -1187,9 +1245,10 @@
     
         // Initialize chat
         document.addEventListener('DOMContentLoaded', () => {
-            initializeDefaultSettings(); // Apply JS defaults to hidden controls & ensure variables are correctly set.
-            handleNextScenarioStep(); 
-        });
+    initializeDefaultSettings();       // existing line
+    showPersonaProfileCard();          // <-- add this line
+    handleNextScenarioStep();          // existing line
+});
     </script>
 </body>
 </html>

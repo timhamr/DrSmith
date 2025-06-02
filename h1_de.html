@@ -688,6 +688,35 @@
 
 }
 /* --- КОНЕЦ НОВЫХ СТИЛЕЙ ДЛЯ FOOTER --- */
+/* === Profile card shown before chat starts ====================== */
+.persona-profile-card{
+    text-align:center;
+    padding:32px 24px;
+    border:2px solid var(--border-color);
+    border-radius:12px;
+    margin-bottom:20px;                 /* keeps distance to first message */
+}
+.persona-profile-card .profile-heading{
+    font-weight:600;
+    color:var(--primary-color);
+    margin:0 0 12px;
+    font-size:1.1rem;
+}
+.persona-profile-card .profile-photo{
+    width:96px;height:96px;
+    margin:0 auto 12px;
+    border-radius:50%;
+    overflow:hidden;
+}
+.persona-profile-card .profile-photo img{width:100%;height:100%;object-fit:cover}
+.persona-profile-card .profile-emoji{font-size:72px;line-height:1}
+.persona-profile-card .profile-name{margin:0;font-size:1.25rem}
+.persona-profile-card .profile-title{
+    margin:4px 0 0;
+    font-size:.9rem;
+    color:var(--text-color-secondary);
+}
+/* =============================================================== */
 
         /* End Scenario Modal (condensed for brevity) */
         .end-scenario-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
@@ -752,6 +781,8 @@
     <div class="chat-page-wrapper">
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
+<!-- Profile card will be injected here -->
+<div id="profileCardMount"></div>
                 </div>
             <div class="chat-input-area">
                 <textarea id="userInput" placeholder="Schreiben Sie Ihre Nachricht..." rows="1" disabled></textarea>
@@ -836,12 +867,39 @@
                 avatarValue: "https://tierzahnzentrum.com/wp-content/uploads/Franziska-Iwanowski-Portraet-1.jpg"
             }
         };
-    
+    	/* ---------- Profile Card helper (adds one card, then leaves it) ------------ */
+function showPersonaProfileCard(){
+    const persona = personaConfig[currentAiPersonaKey];
+
+    // Build card container
+    const card = document.createElement('div');
+    card.classList.add('persona-profile-card');
+
+    card.innerHTML = `
+        <p class="profile-heading">
+            ${currentAiPersonaKey==='human'
+                ? 'Sie sind jetzt mit einer tiermedizinischen Fachkraft verbunden:'
+                : 'Sie sind jetzt mit unserem KI-Assistenten verbunden:'}
+        </p>
+        <div class="profile-photo">
+            ${persona.avatarType==='image'
+                ? `<img src="${persona.avatarValue}" alt="${persona.name}">`
+                : `<span class="profile-emoji">${persona.avatarValue}</span>`}
+        </div>
+        <h3 class="profile-name">${persona.name}</h3>
+        <p class="profile-title">${persona.title}</p>
+    `;
+
+    /* Mount either in the stub (if present) or at the end of messages */
+    (document.getElementById('profileCardMount') || chatMessagesEl).appendChild(card);
+}
+/* -------------------------------------------------------------------------- */
+
         // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Установка значений по умолчанию ---
         // Чтобы управлять поведением по умолчанию, меняйте значения именно этих двух переменных:
         let currentAiPersonaKey = 'human'; // Установите 'bot' или 'human'. Сейчас по умолчанию 'bot'.
                                          // Комментарий: 'Default AI persona. Options: 'human' (Lena Bauer) or 'bot' (VetBot)'
-        let showSources = false;         // Установите true (показывать) или false (скрывать). Сейчас по умолчанию false (скрыты).
+        let showSources = true;         // Установите true (показывать) или false (скрывать). Сейчас по умолчанию false (скрыты).
                                          // Комментарий: 'Default source visibility. Options: true (show) or false (hide)'
         // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЯ ---
     
@@ -861,7 +919,7 @@ const chatScenario = [
     },
     {
         type: 'CB',
-        text: "Okay, gefunden. Ja, Buddy ist für seine Zahnreinigung bei Dr. Haas am Mittwoch, den 16. Juni, um 10:30 Uhr in unserer Münchner Klinik bestätigt (Verifiziert im internen Terminverwaltungssystem##i##). Wir freuen uns auf ihn! Falls sich etwas ändert oder Sie umbuchen müssen, antworten Sie bitte hier oder rufen Sie uns unter 089-413 292 351 an (Source: Clinic Contact Directory##i##)."
+        text: "Okay, gefunden. Ja, Buddy ist für seine Zahnreinigung bei Dr. Haas am Mittwoch, den 16. Juni, um 10:30 Uhr in unserer Münchner Klinik bestätigt (Verifiziert im internen Terminverwaltungssystem##i##). Wir freuen uns auf ihn! Falls sich etwas ändert oder Sie umbuchen müssen, antworten Sie bitte hier oder rufen Sie uns unter 089-413 292 351 an (Quelle: Clinic Contact Directory##i##)."
     },
     {
         type: 'PO_INPUT',
@@ -869,7 +927,7 @@ const chatScenario = [
     },
     {
         type: 'CB',
-        text: "Gute Vorbereitung ist entscheidend. Wir empfehlen generell (Source: Pet Owner Pre-Op Guidelines, revised March 2024##i##):\n\n• Kein Futter für Buddy nach Mitternacht vor seinem Termin (entscheidend für die Narkose).\n• Wasser ist bis ca. 6:00 Uhr morgens am Tag des Eingriffs in Ordnung.\n• Ein kurzer, ruhiger Spaziergang vor dem Klinikbesuch hilft ihm, sich zu entspannen und zu lösen.\n• Wichtig für die Narkose: Halten Sie Buddy auf dem Weg warm. Eine Kuscheldecke oder eine isolierte Transportbox beugt Unterkühlung vor und sorgt für Komfort und Sicherheit (Source: Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024##i##)."
+        text: "Gute Vorbereitung ist entscheidend. Wir empfehlen generell (Quelle: Pet Owner Pre-Op Guidelines, revised March 2024##i##):\n\n• Kein Futter für Buddy nach Mitternacht vor seinem Termin (entscheidend für die Narkose).\n• Wasser ist bis ca. 6:00 Uhr morgens am Tag des Eingriffs in Ordnung.\n• Ein kurzer, ruhiger Spaziergang vor dem Klinikbesuch hilft ihm, sich zu entspannen und zu lösen.\n• Wichtig für die Narkose: Halten Sie Buddy auf dem Weg warm. Eine Kuscheldecke oder eine isolierte Transportbox beugt Unterkühlung vor und sorgt für Komfort und Sicherheit (Quelle: Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024##i##)."
     },
     {
         type: 'PO_INPUT',
@@ -877,7 +935,7 @@ const chatScenario = [
     },
     {
         type: 'CB',
-        text: "Das ist sehr wichtig! Unter Vollnarkose können Haustiere ihre Körpertemperatur schlecht regulieren und verlieren schnell Wärme, was zu Unterkühlung führen kann. Dies kann die Genesung verlangsamen und das Risiko von Komplikationen nach dem Eingriff erhöhen. Hunde zeigen oft einen deutlichen Temperaturabfall (ca. 1°C) in den ersten 15 Minuten nach der Narkoseeinleitung (Source: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Aktives Wärmen in unserer Klinik reduziert diesen Abfall und die Häufigkeit von Unterkühlungen erheblich (Source: Internes Klinikprotokoll 09.10, zuletzt überprüft März 2024##i##). Wir legen größten Wert darauf, Buddys Körperkerntemperatur stabil zu halten (idealerweise 37-38°C) (Source: MSD Veterinary Manual, Kapitel 15: Narkosemanagement, 2023##i##) für eine gute Durchblutung, effizienten Medikamentenstoffwechsel und sanftere Erholung – deshalb bitten wir Sie, Buddy warm zu halten, bevor Sie ihn in die Klinik bringen."
+        text: "Das ist sehr wichtig! Unter Vollnarkose können Haustiere ihre Körpertemperatur schlecht regulieren und verlieren schnell Wärme, was zu Unterkühlung führen kann. Dies kann die Genesung verlangsamen und das Risiko von Komplikationen nach dem Eingriff erhöhen. Hunde zeigen oft einen deutlichen Temperaturabfall (ca. 1°C) in den ersten 15 Minuten nach der Narkoseeinleitung (Quelle: Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024##i##). Aktives Wärmen in unserer Klinik reduziert diesen Abfall und die Häufigkeit von Unterkühlungen erheblich (Quelle: Internes Klinikprotokoll 09.10, zuletzt überprüft März 2024##i##). Wir legen größten Wert darauf, Buddys Körperkerntemperatur stabil zu halten (idealerweise 37-38°C) (Quelle: MSD Veterinary Manual, Kapitel 15: Narkosemanagement, 2023##i##) für eine gute Durchblutung, effizienten Medikamentenstoffwechsel und sanftere Erholung – deshalb bitten wir Sie, Buddy warm zu halten, bevor Sie ihn in die Klinik bringen."
     },
     {
         type: 'PO_INPUT',
@@ -885,7 +943,7 @@ const chatScenario = [
     },
     {
         type: 'CB',
-        text: "Dr. Haas wird Buddy vorab untersuchen, um seine Narkosetauglichkeit zu bestätigen. Wir befolgen strenge Narkoseprotokolle, und ein engagiertes Teammitglied überwacht kontinuierlich sein EKG, Blutdruck, SpO2, Kapnographie (CO2) und Körperkerntemperatur und dokumentiert die Werte alle 5 Minuten (Source: Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024##i##).\n\nFür gesunde Hunde wie Buddy bei Routineeingriffen ist das Risiko moderner Narkoseverfahren sehr gering (unter 0,05%) (Source: AVMA Sicherheitsbericht Narkose, 2020##i##). Wir rufen Sie an, sobald er wach ist und sich erholt."
+        text: "Dr. Haas wird Buddy vorab untersuchen, um seine Narkosetauglichkeit zu bestätigen. Wir befolgen strenge Narkoseprotokolle, und ein engagiertes Teammitglied überwacht kontinuierlich sein EKG, Blutdruck, SpO2, Kapnographie (CO2) und Körperkerntemperatur und dokumentiert die Werte alle 5 Minuten (Quelle: Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024##i##).\n\nFür gesunde Hunde wie Buddy bei Routineeingriffen ist das Risiko moderner Narkoseverfahren sehr gering (unter 0,05%) (Quelle: AVMA Sicherheitsbericht Narkose, 2020##i##). Wir rufen Sie an, sobald er wach ist und sich erholt."
     },
     {
         type: 'PO_INPUT',
@@ -1186,8 +1244,9 @@ const chatScenario = [
     
         // Initialize chat
         document.addEventListener('DOMContentLoaded', () => {
-            initializeDefaultSettings(); // Apply JS defaults to hidden controls & ensure variables are correctly set.
-            handleNextScenarioStep(); 
+            initializeDefaultSettings();       // existing line
+    showPersonaProfileCard();          // <-- add this line
+    handleNextScenarioStep();          // existing line
         });
     </script>
 </body>
