@@ -317,21 +317,15 @@
             background-color: var(--content-bg-color);
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center; 
             padding: 20px;
             box-sizing: border-box;
         }
-        .chat-and-sources {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1000px;
-        }
         .chat-container {
-            flex: 1 1 auto;
-            max-width: 700px;
-            height: 70vh;
-            max-height: 600px;
+            width: 100%;
+            max-width: 800px;
+            height: 70vh; 
+            max-height: 600px; 
             min-height: 450px;
             background-color: var(--background-color);
             border-radius: 12px;
@@ -339,42 +333,6 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-        }
-        .sources-container {
-            width: 240px;
-            background-color: var(--background-color);
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            padding: 15px;
-            font-size: 0.9em;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        .sources-container h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-        .sources-container ul {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .sources-container li {
-            margin-bottom: 8px;
-        }
-        .sources-container a {
-            color: var(--primary-color);
-            word-break: break-word;
-        }
-        @media (max-width: 768px) {
-            .chat-and-sources {
-                flex-direction: column;
-            }
-            .sources-container {
-                width: 100%;
-                max-height: none;
-            }
         }
 
         /* Chat messages area */
@@ -821,7 +779,6 @@
         <input type="checkbox" id="sourcesToggleInternal">
     </div>
     <div class="chat-page-wrapper">
-        <div class="chat-and-sources">
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
                 <!-- Profile card will be injected here -->
@@ -833,21 +790,6 @@
                     <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
                 </button>
             </div>
-        </div>
-        <div class="sources-container">
-            <h3>Sources</h3>
-            <ul>
-                <li><a href="https://clinic-internal.example.com" target="_blank" title="Confirmation that all appointments have been cross-checked against patient records, ensuring no conflicts or missing information prior to each visit.">Verified in Internal Appointment Management System</a></li>
-                <li><a href="https://clinicdirectory.example.com" target="_blank" title="Comprehensive list of clinic departments, physician extensions, nursing staff and support services, including after-hours and emergency contacts for seamless communication.">Clinic Contact Directory</a></li>
-                <li><a href="https://vetprep.example.org" target="_blank" title="Step-by-step instructions for pet owners: fasting requirements, medication adjustments, arrival times, and preoperative behavior to optimize surgical outcomes and reduce stress in pets.">Pet Owner Pre-Op Guidelines (revised March 2024)</a></li>
-                <li><a href="https://vaa.org" target="_blank" title="Evidence-based recommendations on maintaining normothermia during veterinary anesthesia—covers prewarming techniques, intraoperative temperature monitoring, and postoperative warming strategies.">Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024</a></li>
-                <li><a href="https://savj.org" target="_blank" title="Randomized controlled trial demonstrating that limb-specific warming pads significantly reduce intraoperative heat loss in toy and small-breed dogs undergoing soft tissue surgery.">Kudo, A. et al. Peripheral Warming for Prevention of Hypothermia in Small Dogs, 2024</a></li>
-                <li><a href="https://protocols.clinicexample.com" target="_blank" title="Detailed clinic-specific procedures for monitoring and maintaining patient body temperature—includes equipment checklists, alarm thresholds, and staff roles during anesthesia.">Internal Clinic Protocol 09.10: Perioperative Temperature Management (last reviewed March 2024)</a></li>
-                <li><a href="https://merckvetmanual.com" target="_blank" title="Comprehensive overview of anesthetic drug choices, induction techniques, monitoring parameters, and pain control in various species; updated with latest pharmacologic agents and safety margins.">Merck Veterinary Manual – Chapter 15: Anaesthetic Management (2023)</a></li>
-                <li><a href="https://protocols.clinicexample.com" target="_blank" title="Defines minimum monitoring requirements during anesthesia—continuous ECG, pulse oximetry, capnography, and temperature probes, plus documentation templates for intraoperative vital signs.">Clinic Anaesthesia Monitoring Standards, Protocol № 5.10 (updated February 2024)</a></li>
-                <li><a href="https://avma.org" target="_blank" title="Summary of anesthesia-related adverse events collected from member veterinary practices; includes root-cause analyses and best practice recommendations for improving safety in small animal patients.">AVMA Anaesthesia Safety Report, 2020</a></li>
-            </ul>
-        </div>
         </div>
     </div>
 
