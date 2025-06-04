@@ -317,15 +317,16 @@
             background-color: var(--content-bg-color);
             display: flex;
             justify-content: center;
-            align-items: center; 
+            align-items: flex-start;
+            gap: 20px;
             padding: 20px;
             box-sizing: border-box;
         }
         .chat-container {
             width: 100%;
             max-width: 800px;
-            height: 70vh; 
-            max-height: 600px; 
+            height: 70vh;
+            max-height: 600px;
             min-height: 450px;
             background-color: var(--background-color);
             border-radius: 12px;
@@ -333,6 +334,48 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+        }
+
+        .sources-panel {
+            width: 250px;
+            max-height: 70vh;
+            background-color: var(--background-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            padding: 15px;
+            overflow-y: auto;
+            flex-shrink: 0;
+            display: none; /* visibility controlled via JS */
+        }
+        .sources-panel-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .sources-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+        .sources-list li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+        .citation-favicon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        .citation-details p {
+            margin: 0;
         }
 
         /* Chat messages area */
@@ -728,7 +771,7 @@
         /* Responsive adjustments (condensed for brevity) */
         @media (max-width: 992px) { .main-nav { display: none; } .mobile-menu-toggle { display: block; } .site-header .header-contact { display: none; } .header-main { justify-content: space-between; } .message-wrapper { max-width: 90%; } }
         @media (max-width: 768px) { .site-header { padding: 10px 15px; } .header-top { justify-content: center; font-size: 13px; } .header-top .contact-phone { margin-right: 10px;} .header-top .call-btn { margin-right: 10px; padding: 5px 10px; font-size: 12px;} .header-top .contact-phone img, .header-top .contact-email img { height: 18px; width: 18px; } .header-main .logo-container img { height: 40px; } .chat-page-wrapper { padding: 10px; align-items: stretch; } .chat-container {             height: calc(100vh - 129px - 20px); /* Adjusted for more accurate total mobile header height and wrapper padding */
-            ; max-height: none; min-height: 300px; border-radius: 8px; } .message-wrapper { max-width: 95%; } .message { font-size: 14px; } .avatar { width: 35px; height: 35px; font-size: 24px; } .message-content-wrapper { max-width: calc(100% - 45px); } .sender-name { font-size: 0.8em; } .sender-title {font-size: 0.7em;} .chat-input-area textarea { padding: 10px 15px; font-size: 14px; } .chat-input-area button { padding: 0 20px; font-size: 14px; } .footer-content { grid-template-columns: 1fr; text-align: center; } .footer-column .footer-logo { margin-left: auto; margin-right: auto; } .footer-social-icons { justify-content: center; } .site-footer { padding: 20px; } .end-scenario-modal { width: 80%; padding: 20px;} .end-scenario-modal p { font-size: 16px;} }
+            ; max-height: none; min-height: 300px; border-radius: 8px; } .sources-panel{display:none !important;} .message-wrapper { max-width: 95%; } .message { font-size: 14px; } .avatar { width: 35px; height: 35px; font-size: 24px; } .message-content-wrapper { max-width: calc(100% - 45px); } .sender-name { font-size: 0.8em; } .sender-title {font-size: 0.7em;} .chat-input-area textarea { padding: 10px 15px; font-size: 14px; } .chat-input-area button { padding: 0 20px; font-size: 14px; } .footer-content { grid-template-columns: 1fr; text-align: center; } .footer-column .footer-logo { margin-left: auto; margin-right: auto; } .footer-social-icons { justify-content: center; } .site-footer { padding: 20px; } .end-scenario-modal { width: 80%; padding: 20px;} .end-scenario-modal p { font-size: 16px;} }
     </style>
 </head>
 <body>
@@ -791,6 +834,10 @@
                 </button>
             </div>
         </div>
+        <aside class="sources-panel" id="sourcesPanel">
+            <h4 class="sources-panel-title">Citations</h4>
+            <ul class="sources-list" id="sourcesList"></ul>
+        </aside>
     </div>
 
     <footer class="site-footer">
@@ -847,6 +894,8 @@
         const closeModalButtonEl = document.getElementById('closeModalButton');
         const mobileMenuToggleEl = document.getElementById('mobileMenuToggle');
         const mainNavEl = document.getElementById('mainNav');
+        const sourcesPanelEl = document.getElementById('sourcesPanel');
+        const sourcesListEl = document.getElementById('sourcesList');
         
         // Hidden controls (for internal testing/setup)
         const personaToggleInternalEl = document.getElementById('personaToggleInternal');
@@ -857,8 +906,8 @@
             bot: {
                 name: "Zähnchen Bot",
                 title: "AI Dental Assistant | TierZanhZentrum",
-                avatarType: "emoji", 
-                avatarValue: "🤖" 
+                avatarType: "emoji",
+                avatarValue: "🤖"
             },
             human: {
                 name: "Lena Bauer",
@@ -867,6 +916,99 @@
                 avatarValue: "https://tierzahnzentrum.com/wp-content/uploads/Franziska-Iwanowski-Portraet-1.jpg"
             }
         };
+
+        const sourcesData = {
+            "Verified in Internal Appointment Management System": {
+                domain: "clinic-internal.example.com",
+                title: "Verified in Internal Appointment Management System",
+                description: "Confirmation that all appointments have been cross-checked against patient records, ensuring no conflicts or missing information prior to each visit."
+            },
+            "Clinic Contact Directory": {
+                domain: "clinicdirectory.example.com",
+                title: "Clinic Contact Directory",
+                description: "Comprehensive list of clinic departments, physician extensions, nursing staff and support services, including after-hours and emergency contacts for seamless communication."
+            },
+            "Pet Owner Pre-Op Guidelines, revised March 2024": {
+                domain: "vetprep.example.org",
+                title: "Pet Owner Pre-Op Guidelines (revised March 2024)",
+                description: "Step-by-step instructions for pet owners: fasting requirements, medication adjustments, arrival times, and preoperative behavior to optimize surgical outcomes and reduce stress in pets."
+            },
+            "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024": {
+                domain: "vaa.org",
+                title: "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024",
+                description: "Evidence-based recommendations on maintaining normothermia during veterinary anesthesia—covers prewarming techniques, intraoperative temperature monitoring, and postoperative warming strategies."
+            },
+            "Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024": {
+                domain: "savj.org",
+                title: "Kudo, A. et al. Peripheral Warming for Prevention of Hypothermia in Small Dogs, 2024",
+                description: "Randomized controlled trial demonstrating that limb-specific warming pads significantly reduce intraoperative heat loss in toy and small-breed dogs undergoing soft tissue surgery."
+            },
+            "Internal Clinic Protocol 09.10, last reviewed March 2024": {
+                domain: "protocols.clinicexample.com",
+                title: "Internal Clinic Protocol 09.10: Perioperative Temperature Management (last reviewed March 2024)",
+                description: "Detailed clinic-specific procedures for monitoring and maintaining patient body temperature—includes equipment checklists, alarm thresholds, and staff roles during anesthesia."
+            },
+            "MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023": {
+                domain: "merckvetmanual.com",
+                title: "Merck Veterinary Manual – Chapter 15: Anaesthetic Management (2023)",
+                description: "Comprehensive overview of anesthetic drug choices, induction techniques, monitoring parameters, and pain control in various species; updated with latest pharmacologic agents and safety margins."
+            },
+            "Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024": {
+                domain: "protocols.clinicexample.com",
+                title: "Clinic Anaesthesia Monitoring Standards, Protocol № 5.10 (updated February 2024)",
+                description: "Defines minimum monitoring requirements during anesthesia—continuous ECG, pulse oximetry, capnography, and temperature probes, plus documentation templates for intraoperative vital signs."
+            },
+            "AVMA Anaesthesia Safety Report, 2020": {
+                domain: "avma.org",
+                title: "AVMA Anaesthesia Safety Report, 2020",
+                description: "Summary of anesthesia-related adverse events collected from member veterinary practices; includes root-cause analyses and best practice recommendations for improving safety in small animal patients."
+            }
+        };
+
+        const citedSources = new Set();
+
+        function extractCitationNames(text) {
+            const regex = /\(([^)]+?)##i##\)/g;
+            const names = [];
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+                let name = match[1].trim();
+                name = name.replace(/^Source:\s*/i, '');
+                names.push(name);
+            }
+            return names;
+        }
+
+        function renderCitationsPanel() {
+            sourcesListEl.innerHTML = '';
+            citedSources.forEach(name => {
+                const data = sourcesData[name];
+                if (!data) return;
+                const li = document.createElement('li');
+                const fav = data.domain ? `<img class="citation-favicon" src="https://www.google.com/s2/favicons?domain=${data.domain}" alt="">` : '';
+                li.innerHTML = `${fav}<div class="citation-details"><span class="citation-title">${data.title}</span><p>${data.description}</p></div>`;
+                sourcesListEl.appendChild(li);
+            });
+        }
+
+        function updateSourcesPanelVisibility() {
+            sourcesPanelEl.style.display = showSources ? 'block' : 'none';
+        }
+
+        function addCitationsFromText(text) {
+            const names = extractCitationNames(text);
+            let added = false;
+            names.forEach(n => {
+                if (!citedSources.has(n)) {
+                    citedSources.add(n);
+                    added = true;
+                }
+            });
+            if (added) {
+                renderCitationsPanel();
+            }
+            updateSourcesPanelVisibility();
+        }
     /* ---------- Profile Card helper (adds one card, then leaves it) ------------ */
 function showPersonaProfileCard(){
     const persona = personaConfig[currentAiPersonaKey];
@@ -1028,6 +1170,7 @@ function showPersonaProfileCard(){
                 const textParagraph = document.createElement('p');
                 textParagraph.innerHTML = processSources(text); // Обработка источников
                 messageBubbleDiv.appendChild(textParagraph);
+                addCitationsFromText(text);
                 
                 messageContentWrapper.appendChild(messageBubbleDiv);
                 outerWrapper.appendChild(messageContentWrapper);
@@ -1227,6 +1370,7 @@ function showPersonaProfileCard(){
         });
         sourcesToggleInternalEl.addEventListener('change', (event) => {
             showSources = event.target.checked;
+            updateSourcesPanelVisibility();
         });
         
         // This function now SETS the hidden controls based on JS variables
@@ -1240,6 +1384,7 @@ function showPersonaProfileCard(){
             if (sourcesToggleInternalEl) {
                 sourcesToggleInternalEl.checked = showSources;
             }
+            updateSourcesPanelVisibility();
         }
         // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЬ ---
     
@@ -1247,6 +1392,7 @@ function showPersonaProfileCard(){
         document.addEventListener('DOMContentLoaded', () => {
     initializeDefaultSettings();       // existing line
     showPersonaProfileCard();          // <-- add this line
+    updateSourcesPanelVisibility();
     handleNextScenarioStep();          // existing line
 });
     </script>
