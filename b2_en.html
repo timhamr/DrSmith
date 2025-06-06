@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetBot AI Chat - TierZahnZentrum</title>
+    <title>Chat-Support - TierZahnZentrum</title>
     
-    <link rel="shortcut icon" href="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-icon-rgb.svg#150" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-icon-rgb.svg#150">
+    <link rel="shortcut icon" href="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnZentrum-icon-rgb.svg#150" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnZentrum-icon-rgb.svg#150">
     <meta name="theme-color" content="#ffffff">
 
     <style>
@@ -282,12 +282,6 @@
         }
     }
 
-    /* Исправляем высоту чат-контейнера для мобильных */
-    @media (max-width: 768px) { 
-        .chat-container { 
-            height: calc(100vh - 60px - 20px); /* 60px - новая высота моб. хедера, 20px - отступы wrapper */
-        } 
-    }
     /* --- КОНЕЦ НОВЫХ/ОБНОВЛЕННЫХ СТИЛЕЙ ДЛЯ HEADER --- */
         /* Hidden Controls Container */
         #hiddenControlsContainer {
@@ -316,14 +310,16 @@
             flex-grow: 1;
             background-color: var(--content-bg-color);
             display: flex;
-            justify-content: center;
-            align-items: center; 
+            justify-content: center; */ /* <--- ЭТУ СТРОКУ УДАЛИТЬ или ЗАКОММЕНТИРОВАТЬ */
+            align-items: flex-start; /* <--- ЗАМЕНИТЬ НА align-items: flex-start; */
             padding: 20px;
             box-sizing: border-box;
+            gap: 20px; /* Space between chat container and citations panel */
         }
         .chat-container {
-            width: 100%;
+            /* width: 100%; */ /* <--- ЭТУ СТРОКУ УДАЛИТЬ или ЗАКОММЕНТИРОВАТЬ */
             max-width: 800px;
+            flex-grow: 1; /* Allow chat container to take up more space */
             height: 70vh; 
             max-height: 600px; 
             min-height: 450px;
@@ -355,7 +351,15 @@
             flex-direction: row; 
             gap: 10px;
         }
+/* --- Smooth message entrance --- */
+@keyframes msgFadeSlide {
+    0%   { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
 
+.message-wrapper.animate-in {
+    animation: msgFadeSlide 0.35s ease-out forwards;
+}
         .user-message-wrapper {
             align-self: flex-end;
         }
@@ -487,6 +491,139 @@
             margin-left: -5px; border-width: 5px; border-style: solid;
             border-color: #555 transparent transparent transparent;
         }
+
+        /* Citations Panel Styles */
+        .citations-panel {
+            width: 320px; /* Fixed width for the panel */
+            flex-shrink: 0; /* Prevent panel from shrinking */
+            height: 70vh; /* Match chat container height */
+            max-height: 600px; /* Match chat container max-height */
+            background-color: var(--background-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            font-size: 0.83em;
+        }
+        .citations-panel.hidden {
+            display: none;
+        }
+        .citations-panel h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .citations-panel ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1; 
+        }
+        .citations-panel li {
+            margin-bottom: 18px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #efefef; 
+            display: flex; /* For aligning icon and text */
+            align-items: flex-start; /* Align items to the top */
+            gap: 10px; /* Space between icon and text block */
+        }
+        .citations-panel li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .citations-panel .source-favicon {
+            width: 16px; /* Favicon size */
+            height: 16px;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            margin-top: 3px; /* Align with first line of title */
+        }
+        .citations-panel .source-details {
+            flex-grow: 1; /* Allow text block to take remaining space */
+        }
+        .citations-panel .source-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+        .citations-panel .source-url {
+            font-size: 0.8em;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            display: block;
+            word-break: break-all;
+        }
+        .citations-panel .source-url a {
+            color: var(--primary-color);
+        }
+        .citations-panel .source-url a:hover {
+            text-decoration: underline;
+        }
+        .citations-panel .source-description {
+            font-size: 0.85em;
+            color: var(--text-color-secondary);
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+        .citations-panel .source-meta {
+            font-size: 0.75em;
+            color: #777;
+            margin-top: 8px;
+        }
+        .citations-panel .source-meta span {
+            display: block;
+            margin-bottom: 3px;
+        }
+        .citations-panel .source-meta span:last-child {
+            margin-bottom: 0;
+        }
+        .citations-panel .empty-state {
+            text-align: center;
+            color: var(--text-color-secondary);
+            font-style: italic;
+            margin-top: 20px; 
+            flex-grow: 1; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+        /* Responsive adjustments for citations panel */
+        @media (max-width: 768px) { 
+            .chat-page-wrapper {
+                flex-direction: column; /* Stack chat and citations on mobile */
+            }
+            .citations-panel {
+                width: 100%; /* Full width on mobile */
+                max-height: 250px; /* Limit height on mobile */
+                height: auto; /* Adjust height based on content up to max-height */
+                margin-top: 0; /* Remove top margin if chat-page-wrapper gap handles it */
+            }
+            /* Adjust chat container height if panel is below it */
+            .chat-container { 
+                /* Original calculation: height: calc(100vh - 60px - 20px - 250px - 20px); /* header - wrapper padding - panel max_height - gap */
+                /* Corrected calculation: Ensure it doesn't go negative and considers existing calculations */
+                /* Let's re-evaluate the mobile chat container height considering the new panel */
+                /* Assuming header is 60px, wrapper padding is 20px top/bottom (total 40px), panel is 250px, gap is 20px */
+                /* Total vertical space used by other elements: 60 (header) + 20 (wrapper top) + 250 (panel) + 20 (gap) + 20 (wrapper bottom) = 370px */
+                /* So, chat container height could be: calc(100vh - 370px) - but this might be too aggressive. */
+                /* Let's stick to the provided calculation and ensure it's applied correctly. */
+                 height: calc(100vh - 60px - 20px - 250px - 20px); /* header (60) - wrapper padding (20) - panel max_height (250) - gap (20) */
+                 /* This calculation was for when the panel is *below* the chat.
+                    If the panel is *above* or if the flex-direction is column, the interaction is different.
+                    The current CSS stacks them, so the chat container height needs to be reduced.
+                 */
+            } 
+        }
+
 
         /* Site Footer styling (condensed for brevity) */
         /* --- НАЧАЛО НОВЫХ СТИЛЕЙ ДЛЯ FOOTER --- */
@@ -631,8 +768,8 @@
 
 .footer-copyright {
     text-align: center;
-    padding-top: 30px; /* Увеличен отступ сверху */
-    margin-top: 30px; /* Увеличен отступ сверху */
+    padding-top: 30px; /* Увеличен верхний отступ сверху */
+    margin-top: 30px; /* Увеличен верхний отступ сверху */
     border-top: 1px solid var(--border-color);
     font-size: 13px;
     color: var(--text-color-secondary);
@@ -726,9 +863,48 @@
         .end-scenario-modal button:hover { background-color: var(--primary-color-darker); }
 
         /* Responsive adjustments (condensed for brevity) */
-        @media (max-width: 992px) { .main-nav { display: none; } .mobile-menu-toggle { display: block; } .site-header .header-contact { display: none; } .header-main { justify-content: space-between; } .message-wrapper { max-width: 90%; } }
-        @media (max-width: 768px) { .site-header { padding: 10px 15px; } .header-top { justify-content: center; font-size: 13px; } .header-top .contact-phone { margin-right: 10px;} .header-top .call-btn { margin-right: 10px; padding: 5px 10px; font-size: 12px;} .header-top .contact-phone img, .header-top .contact-email img { height: 18px; width: 18px; } .header-main .logo-container img { height: 40px; } .chat-page-wrapper { padding: 10px; align-items: stretch; } .chat-container {             height: calc(100vh - 129px - 20px); /* Adjusted for more accurate total mobile header height and wrapper padding */
-            ; max-height: none; min-height: 300px; border-radius: 8px; } .message-wrapper { max-width: 95%; } .message { font-size: 14px; } .avatar { width: 35px; height: 35px; font-size: 24px; } .message-content-wrapper { max-width: calc(100% - 45px); } .sender-name { font-size: 0.8em; } .sender-title {font-size: 0.7em;} .chat-input-area textarea { padding: 10px 15px; font-size: 14px; } .chat-input-area button { padding: 0 20px; font-size: 14px; } .footer-content { grid-template-columns: 1fr; text-align: center; } .footer-column .footer-logo { margin-left: auto; margin-right: auto; } .footer-social-icons { justify-content: center; } .site-footer { padding: 20px; } .end-scenario-modal { width: 80%; padding: 20px;} .end-scenario-modal p { font-size: 16px;} }
+        /* The general responsive rules were here. Some might be overridden by the new citations panel rules or need adjustment. */
+        @media (max-width: 992px) { 
+            /* .main-nav { display: none; }  Already handled by header styles */
+            /* .mobile-menu-toggle { display: block; } Already handled */
+            /* .site-header .header-contact { display: none; } Already handled */
+            /* .header-main { justify-content: space-between; } Already handled */
+            .message-wrapper { max-width: 90%; } 
+        }
+        
+        /* Combined mobile styles for 768px and below */
+        @media (max-width: 768px) {
+            /* .site-header { padding: 10px 15px; } Already handled */
+            /* .header-top { justify-content: center; font-size: 13px; } No .header-top class in current HTML */
+            /* .header-top .contact-phone { margin-right: 10px;} */
+            /* .header-top .call-btn { margin-right: 10px; padding: 5px 10px; font-size: 12px;} */
+            /* .header-top .contact-phone img, .header-top .contact-email img { height: 18px; width: 18px; } */
+            /* .header-main .logo-container img { height: 40px; } Already handled */
+            
+            /* .chat-page-wrapper styling is now handled by the new citations panel rules */
+            
+            /* .chat-container height is now handled by the new citations panel rules for mobile */
+            /* .chat-container { max-height: none; min-height: 300px; border-radius: 8px; } */ /* Some parts might still be relevant */
+             .chat-container {
+                min-height: 300px; /* Retain min-height */
+                border-radius: 8px; /* Retain border-radius for mobile */
+             }
+
+
+            .message-wrapper { max-width: 95%; }
+            .message { font-size: 14px; }
+            .avatar { width: 35px; height: 35px; font-size: 24px; }
+            .message-content-wrapper { max-width: calc(100% - 45px); }
+            .sender-name { font-size: 0.8em; }
+            .sender-title {font-size: 0.7em;}
+            .chat-input-area textarea { padding: 10px 15px; font-size: 14px; }
+            .chat-input-area button { padding: 0 20px; font-size: 14px; }
+            
+            /* .footer-content, .footer-column, .footer-social-icons, .site-footer already handled by footer styles */
+            
+            .end-scenario-modal { width: 80%; padding: 20px;}
+            .end-scenario-modal p { font-size: 16px;}
+        }
     </style>
 </head>
 <body>
@@ -737,7 +913,7 @@
         <div class="header-content-wrapper">
             <div class="logo-container">
                 <a href="https://tierzahnzentrum.com" title="TierZahnZentrum Homepage">
-                    <img src="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-Logo-quer-rgb.svg#149" alt="TierZahnZentrum Logo">
+                    <img src="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-Logo-quer-rgb.svg#149" alt="TierZahnZentrum Logo" onerror="this.onerror=null;this.src='https://placehold.co/200x45/eeeeee/999999?text=Logo';">
                 </a>
             </div>
             <nav class="main-nav" id="mainNav">
@@ -758,12 +934,12 @@
             </nav>
             <div class="header-actions">
                 <a href="tel:089413292351" class="contact-phone-link">
-                    <img src="https://tierzahnzentrum.com/wp-content/uploads/telefon-kontakt-icon.svg" alt="Phone Icon" class="header-icon">
+                    <img src="https://tierzahnzentrum.com/wp-content/uploads/telefon-kontakt-icon.svg" alt="Phone Icon" class="header-icon" onerror="this.onerror=null;this.src='https://placehold.co/24x24/eeeeee/999999?text=P';">
                     <span class="phone-number-text">089-413 292 351</span>
                 </a>
                 <a href="tel:089413292351" class="btn call-btn header-call-btn">Jetzt anrufen</a>
                 <a href="mailto:info@tierzahnzentrum.com" class="contact-email-link" title="Email us">
-                    <img src="https://tierzahnzentrum.com/wp-content/uploads/e-mail-kontakt-icon.svg" alt="Email Icon" class="header-icon">
+                    <img src="https://tierzahnzentrum.com/wp-content/uploads/e-mail-kontakt-icon.svg" alt="Email Icon" class="header-icon" onerror="this.onerror=null;this.src='https://placehold.co/24x24/eeeeee/999999?text=E';">
                 </a>
             </div>
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">☰</button>
@@ -778,18 +954,26 @@
         <label for="sourcesToggleInternal">Quellen anzeigen (intern):</label>
         <input type="checkbox" id="sourcesToggleInternal">
     </div>
+
     <div class="chat-page-wrapper">
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
                 <!-- Profile card will be injected here -->
                 <div id="profileCardMount"></div>
-                </div>
+            </div>
             <div class="chat-input-area">
                 <textarea id="userInput" placeholder="Write your message..." rows="1" disabled></textarea>
                 <button id="sendButton" title="Send" disabled>
                     <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
                 </button>
             </div>
+        </div>
+        <!-- Шаг 1: Добавление HTML-структуры для панели цитат -->
+        <div id="citationsPanel" class="citations-panel hidden">
+            <h3>Citations</h3>
+            <ul id="citationsList">
+                <!-- Citations will be populated here by JavaScript -->
+            </ul>
         </div>
     </div>
 
@@ -803,13 +987,13 @@
                     E-Mail: <a href="mailto:info@tierzahnzentrum.com">info@tierzahnzentrum.com</a>
                 </p>
                 <div class="footer-social-icons">
-                    <a href="https://www.facebook.com/profile.php?id=61556672531345" target="_blank" title="Facebook"><img src="https://placehold.co/28x28/777777/FFFFFF?text=f&font=arial" alt="Facebook"></a>
-                    <a href="https://www.instagram.com/tier.zahnzentrum/" target="_blank" title="Instagram"><img src="https://placehold.co/28x28/777777/FFFFFF?text=i&font=arial" alt="Instagram"></a>
-                    <a href="#" target="_blank" title="YouTube"><img src="https://placehold.co/28x28/777777/FFFFFF?text=yt&font=arial" alt="YouTube"></a>
+                    <a href="https://www.facebook.com/profile.php?id=61556672531345" target="_blank" title="Facebook"><img src="https://placehold.co/28x28/777777/FFFFFF?text=f&font=arial" alt="Facebook" onerror="this.onerror=null;this.src='https://placehold.co/28x28/eeeeee/999999?text=FB';"></a>
+                    <a href="https://www.instagram.com/tier.zahnzentrum/" target="_blank" title="Instagram"><img src="https://placehold.co/28x28/777777/FFFFFF?text=i&font=arial" alt="Instagram" onerror="this.onerror=null;this.src='https://placehold.co/28x28/eeeeee/999999?text=IG';"></a>
+                    <a href="#" target="_blank" title="YouTube"><img src="https://placehold.co/28x28/777777/FFFFFF?text=yt&font=arial" alt="YouTube" onerror="this.onerror=null;this.src='https://placehold.co/28x28/eeeeee/999999?text=YT';"></a>
                 </div>
             </div>
     
-            <div class="footer-column footer-column-2"> <img src="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-icon-rgb.svg" alt="TierZahnZentrum Icon" class="footer-center-logo">
+            <div class="footer-column footer-column-2"> <img src="https://tierzahnzentrum.com/wp-content/uploads/2024-TierZahnzentrum-Logo-quer-rgb.svg#149" alt="TierZahnZentrum Icon" class="footer-center-logo" onerror="this.onerror=null;this.src='https://placehold.co/45x45/eeeeee/999999?text=Icon';">
                 <h4 class="footer-question">Sie haben Fragen?</h4>
                 <p class="footer-contact-email"><a href="mailto:info@tierzahnzentrum.com">info@tierzahnzentrum.com</a></p>
                 <div class="footer-buttons">
@@ -851,6 +1035,10 @@
         // Hidden controls (for internal testing/setup)
         const personaToggleInternalEl = document.getElementById('personaToggleInternal');
         const sourcesToggleInternalEl = document.getElementById('sourcesToggleInternal');
+
+        // Шаг 3: Добавьте ссылки на DOM-элементы панели цитат:
+        const citationsPanelEl = document.getElementById('citationsPanel');
+        const citationsListEl = document.getElementById('citationsList');
     
         // Persona Configuration
         const personaConfig = {
@@ -867,33 +1055,95 @@
                 avatarValue: "https://tierzahnzentrum.com/wp-content/uploads/Franziska-Iwanowski-Portraet-1.jpg"
             }
         };
+
+        // Шаг 3: Добавьте объект allSourcesDetails и переменную citedSourcesInSession:
+        const allSourcesDetails = {
+    "Verified in Internal Appointment Management System": {
+        titleFromOriginalList: "Verified in Internal Appointment Management System",
+        url: "tierzahnzentrum.com",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
+        description: "Appointment data verified against patient records."
+    },
+    "Clinic Contact Directory": {
+        titleFromOriginalList: "Clinic Contact Directory",
+        url: "tierzahnzentrum.com",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
+        description: "Clinic staff and department contact list."
+    },
+    "Pet Owner Pre-Op Guidelines, revised March 2024": {
+        titleFromOriginalList: "Pet Owner Pre-Op Guidelines (revised March 2024)",
+        url: "tierzahnzentrum.com",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
+        description: "Pre-surgery instructions for pet owners."
+    },
+    "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024": {
+        titleFromOriginalList: "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024",
+        url: "vaa.org",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=vaa.org",
+        description: "Normothermia maintenance during anesthesia."
+    },
+    "Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024": {
+        titleFromOriginalList: "Kudo, A. et al. Peripheral Warming for Prevention of Hypothermia in Small Dogs, 2024",
+        url: "savj.org",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=savj.org",
+        description: "Study on warming pads reducing hypothermia in small dogs."
+    },
+    "Internal Clinic Protocol 09.10, last reviewed March 2024": {
+        titleFromOriginalList: "Internal Clinic Protocol 09.10: Perioperative Temperature Management (last reviewed March 2024)",
+        url: "tierzahnzentrum.com",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
+        description: "Clinic procedures for patient temperature control."
+    },
+    "MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023": {
+        titleFromOriginalList: "Merck Veterinary Manual – Chapter 15: Anaesthetic Management (2023)",
+        url: "merckvetmanual.com",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=merckvetmanual.com",
+        description: "Overview of anesthesia management in animals."
+    },
+    "Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024": {
+        titleFromOriginalList: "Clinic Anaesthesia Monitoring Standards, Protocol № 5.10 (updated February 2024)",
+        url: "tierzahnzentrum.com",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
+        description: "Minimum monitoring requirements during anesthesia."
+    },
+    "AVMA Anaesthesia Safety Report, 2020": {
+        titleFromOriginalList: "AVMA Anaesthesia Safety Report, 2020",
+        url: "avma.org",
+        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=avma.org",
+        description: "Report on anesthesia safety and adverse events."
+    }
+};
+
+
+        let citedSourcesInSession = new Set();
+
     /* ---------- Profile Card helper (adds one card, then leaves it) ------------ */
-function showPersonaProfileCard(){
-    const persona = personaConfig[currentAiPersonaKey];
+    function showPersonaProfileCard(){
+        const persona = personaConfig[currentAiPersonaKey];
 
-    // Build card container
-    const card = document.createElement('div');
-    card.classList.add('persona-profile-card');
+        // Build card container
+        const card = document.createElement('div');
+        card.classList.add('persona-profile-card');
 
-    card.innerHTML = `
-        <p class="profile-heading">
-            ${currentAiPersonaKey==='human'
-                ? 'You’re now connected with a <span class="badge-human">live specialist</span>:'
-                : 'You’re now connected with an AI assistant:'}
-        </p>
-        <div class="profile-photo">
-            ${persona.avatarType==='image'
-                ? `<img src="${persona.avatarValue}" alt="${persona.name}">`
-                : `<span class="profile-emoji">${persona.avatarValue}</span>`}
-        </div>
-        <h3 class="profile-name">${persona.name}</h3>
-        <p class="profile-title">${persona.title}</p>
-    `;
+        card.innerHTML = `
+            <p class="profile-heading">
+                ${currentAiPersonaKey==='human'
+                    ? 'You’re now connected with a <span class="badge-human">live specialist</span>:'
+                    : 'You are chatting with our AI assistant:'}
+            </p>
+            <div class="profile-photo">
+                ${persona.avatarType==='image'
+                    ? `<img src="${persona.avatarValue}" alt="${persona.name}" onerror="this.onerror=null;this.src='https://placehold.co/96x96/eeeeee/999999?text=Avatar';">`
+                    : `<span class="profile-emoji">${persona.avatarValue}</span>`}
+            </div>
+            <h3 class="profile-name">${persona.name}</h3>
+            <p class="profile-title">${persona.title}</p>
+        `;
 
-    /* Mount either in the stub (if present) or at the end of messages */
-    (document.getElementById('profileCardMount') || chatMessagesEl).appendChild(card);
-}
-/* -------------------------------------------------------------------------- */
+        /* Mount either in the stub (if present) or at the end of messages */
+        (document.getElementById('profileCardMount') || chatMessagesEl).appendChild(card);
+    }
+    /* -------------------------------------------------------------------------- */
 
         // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Установка значений по умолчанию ---
         // Чтобы управлять поведением по умолчанию, меняйте значения именно этих двух переменных:
@@ -967,25 +1217,94 @@ function showPersonaProfileCard(){
             return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
         }
     
-        // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Функция processSources ---
+        // Шаг 3: Замените существующую функцию processSources:
         function processSources(text) {
-            const sourceRegex = /\s*\(([^)]+?)##i##\)/g; // Добавлен \s* для захвата пробела перед скобкой, если он есть
-            if (!showSources) {
-                // Если источники отключены, полностью удаляем всю конструкцию (Источник: ...##i##)
-                return text.replace(sourceRegex, ''); 
+            // Regex updated to make "Source: " optional and capture the actual source name.
+            // Also, the ##i## is part of the source marker, not the name itself.
+            const sourceRegex = /\s*\((?:Source:\s*)?([^()]+?)##i##\)/g;
+            let processedText = text;
+            let match;
+
+            // First, iterate through the text to find all sources and add them to citedSourcesInSession
+            // We need a new RegExp object for each exec loop if using 'g' flag and want to restart search
+            const findSourcesRegex = new RegExp(sourceRegex.source, sourceRegex.flags); 
+            while ((match = findSourcesRegex.exec(text)) !== null) {
+                // match[1] will now contain the source name without "Source: "
+                const sourceKey = match[1].trim(); 
+                if (allSourcesDetails[sourceKey]) {
+                    citedSourcesInSession.add(sourceKey);
+                }
             }
-            // Если источники включены, создаем кнопку
-            return text.replace(sourceRegex, (match, citationText) => {
-                const tooltipId = `tooltip-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
-                const cleanCitationText = citationText.trim().replace(/"/g, '&quot;');
-                // Убираем пробел перед скобкой, если он был, для корректного отображения кнопки
-                const buttonHtml = `<button class="source-button" aria-describedby="${tooltipId}" title="${cleanCitationText}">i<span class="tooltip-text" role="tooltip" id="${tooltipId}">${cleanCitationText}<span class="tooltip-arrow"></span></span></button>`;
-                // Если оригинальный match начинался с пробела, сохраняем этот пробел перед кнопкой
-                return match.startsWith(" (") ? " " + buttonHtml : buttonHtml;
-            });
+
+            // Then, process the text for display (remove or create buttons)
+            if (!showSources) {
+                // If sources are off, remove the entire (Source: Name##i##) block
+                processedText = text.replace(sourceRegex, ''); 
+            } else {
+                // If sources are on, replace with buttons
+                // When replacing for the button, match[1] (capturedSourceName) is already the correct key.
+                processedText = text.replace(sourceRegex, (originalMatch, capturedSourceName) => {
+                    const sourceKeyForButton = capturedSourceName.trim(); // This is the actual source name
+                    const tooltipId = `tooltip-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+                    // Tooltip should display the actual source name
+                    const cleanCitationTextForTooltip = sourceKeyForButton.replace(/"/g, '&quot;'); 
+
+                    const buttonHtml = `<button class="source-button" aria-describedby="${tooltipId}" title="${cleanCitationTextForTooltip}">i<span class="tooltip-text" role="tooltip" id="${tooltipId}">${cleanCitationTextForTooltip}<span class="tooltip-arrow"></span></span></button>`;
+                    // Preserve leading space if present
+                    return originalMatch.startsWith(" (") ? " " + buttonHtml : buttonHtml;
+                });
+            }
+            return processedText;
         }
-        // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЬ ---
-    
+
+        // Шаг 3: Добавьте новую функцию updateCitationsPanel:
+        function updateCitationsPanel() {
+            if (!citationsPanelEl || !citationsListEl) return;
+
+            citationsListEl.innerHTML = ''; // Clear previous citations
+
+            if (!showSources) {
+                citationsPanelEl.classList.remove('hidden');
+                citationsListEl.innerHTML =
+                    '<p class="empty-state">No sources cited yet in this session.</p>';
+                return;
+            }
+
+            citationsPanelEl.classList.remove('hidden');
+
+            if (citedSourcesInSession.size === 0) {
+                citationsListEl.innerHTML = '<p class="empty-state">No sources cited yet in this session.</p>';
+            } else {
+                citedSourcesInSession.forEach(sourceKey => {
+                    const sourceData = allSourcesDetails[sourceKey];
+                    if (sourceData) {
+                        const listItem = document.createElement('li');
+
+                        let faviconHtml = '';
+                        if (sourceData.faviconUrl) {
+                            faviconHtml = `<img src="${sourceData.faviconUrl}" alt="" class="source-favicon" onerror="this.onerror=null;this.src='https://placehold.co/16x16/eeeeee/999999?text=F';this.alt='Favicon failed to load';">`;
+                        }
+
+                        const linkHref = sourceData.url && sourceData.url.startsWith("http") ? sourceData.url : `https://${sourceData.url}`;
+                        
+                        // Corrected template literal for listItem.innerHTML
+                        listItem.innerHTML = `
+                            ${faviconHtml}
+                            <div class="source-details">
+                                <div class="source-title">${sourceData.titleFromOriginalList}</div>
+                                ${sourceData.url ? `<div class="source-url"><a href="${linkHref}" target="_blank" rel="noopener noreferrer">${sourceData.url}</a></div>` : ''}
+                                <div class="source-description">${sourceData.description}</div>
+                                <div class="source-meta">
+                                    ${sourceData.type ? `<span>Type: ${sourceData.type}</span>` : ''}
+                                    ${sourceData.likelyContent ? `<span>Likely Content: ${sourceData.likelyContent}</span>` : ''}
+                                </div>
+                            </div>`;
+                        citationsListEl.appendChild(listItem);
+                    }
+                    citationsPanelEl.scrollTo({top: citationsPanelEl.scrollHeight, behavior: 'smooth'}); // <--- ДОБАВИТЬ ЭТУ СТРОКУ (Added this line)
+                });
+            }
+        }
     
         function addMessageToChat(text, senderType) {
             const outerWrapper = document.createElement('div');
@@ -1001,6 +1320,7 @@ function showPersonaProfileCard(){
                     const avatarImg = document.createElement('img');
                     avatarImg.src = persona.avatarValue;
                     avatarImg.alt = persona.name + " avatar";
+                    avatarImg.onerror = function() { this.onerror=null; this.src='https://placehold.co/40x40/eeeeee/999999?text=Ava'; };
                     avatarDiv.appendChild(avatarImg);
                 } else { 
                     avatarDiv.textContent = persona.avatarValue;
@@ -1026,11 +1346,15 @@ function showPersonaProfileCard(){
                 messageBubbleDiv.classList.add('message', 'ai-message');
                 
                 const textParagraph = document.createElement('p');
-                textParagraph.innerHTML = processSources(text); // Обработка источников
+                // Process sources *before* adding to DOM to collect all source keys
+                const processedTextForBubble = processSources(text); 
+                textParagraph.innerHTML = processedTextForBubble;
                 messageBubbleDiv.appendChild(textParagraph);
                 
                 messageContentWrapper.appendChild(messageBubbleDiv);
                 outerWrapper.appendChild(messageContentWrapper);
+
+                updateCitationsPanel(); // <--- ДОБАВИТЬ ЭТУ СТРОКУ (Added this line)
     
             } else { // user message
                 outerWrapper.classList.add('user-message-wrapper');
@@ -1052,7 +1376,8 @@ function showPersonaProfileCard(){
             }
     
             chatMessagesEl.appendChild(outerWrapper);
-            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+            outerWrapper.classList.add('animate-in'); // ← запускаем CSS-анимацию
+            chatMessagesEl.scrollTo({ top: chatMessagesEl.scrollHeight, behavior: 'smooth' });
         }
     
         function showTypingIndicator() {
@@ -1066,6 +1391,7 @@ function showPersonaProfileCard(){
                 const avatarImg = document.createElement('img');
                 avatarImg.src = persona.avatarValue;
                 avatarImg.alt = persona.name + " avatar";
+                avatarImg.onerror = function() { this.onerror=null; this.src='https://placehold.co/40x40/eeeeee/999999?text=Ava'; };
                 avatarDiv.appendChild(avatarImg);
             } else { 
                 avatarDiv.textContent = persona.avatarValue;
@@ -1141,7 +1467,7 @@ function showPersonaProfileCard(){
                     } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
                         handleNextScenarioStep(); 
                     }
-                }, 3000 + Math.random() * 6000); 
+                }, 3000 + Math.random() * 5000); // Reduced delay for faster demo
             } else if (step.type === 'END_SCENARIO') {
                 userInputEl.placeholder = "Consultation ended.";
                 setTimeout(() => { 
@@ -1197,16 +1523,13 @@ function showPersonaProfileCard(){
             endScenarioOverlayEl.style.display = 'none';
         });
         
-        // Mobile menu toggle
     if (mobileMenuToggleEl && mainNavEl) {
         mobileMenuToggleEl.addEventListener('click', () => {
             const isActive = mainNavEl.classList.toggle('mobile-active');
             mobileMenuToggleEl.classList.toggle('active', isActive);
-            mobileMenuToggleEl.innerHTML = isActive ? '&#x2715;' : '&#9776;'; // Крестик и бургер
-            // Опционально: блокировать прокрутку страницы при открытом меню
+            mobileMenuToggleEl.innerHTML = isActive ? '&#x2715;' : '&#9776;'; 
             document.body.style.overflow = isActive ? 'hidden' : ''; 
 
-            // Закрытие меню по клику на ссылку (для одностраничных переходов или якорей)
             if (isActive) {
                 mainNavEl.querySelectorAll('.nav-link').forEach(link => {
                     link.addEventListener('click', () => {
@@ -1214,26 +1537,39 @@ function showPersonaProfileCard(){
                         mobileMenuToggleEl.classList.remove('active');
                         mobileMenuToggleEl.innerHTML = '&#9776;';
                         document.body.style.overflow = '';
-                    }, { once: true }); // Сработает один раз и удалится
+                    }, { once: true }); 
                 });
             }
         });
     }
     
         // --- ИЗМЕНЕНИЯ ЗДЕСЬ: Логика скрытых контролов ---
-        // Event listeners for internal controls to update JS variables if controls are changed (e.g., during testing if made visible)
         personaToggleInternalEl.addEventListener('change', (event) => {
             currentAiPersonaKey = event.target.value;
+            // Potentially re-render profile card or update existing messages if persona changes mid-chat
+            // For this exercise, we assume it's set at the start.
         });
+
+        // Шаг 3: Обновите обработчик события для sourcesToggleInternalEl:
         sourcesToggleInternalEl.addEventListener('change', (event) => {
             showSources = event.target.checked;
+            updateCitationsPanel(); // Update the side panel's visibility and content
+
+            // Update visibility of existing source buttons in messages
+            // This requires re-processing existing messages or simply toggling button visibility
+            // For simplicity, let's toggle visibility of existing buttons.
+            // A more robust solution might re-render messages if sources are toggled.
+            const allSourceButtons = document.querySelectorAll('.chat-messages .source-button');
+            allSourceButtons.forEach(button => {
+                button.style.display = showSources ? 'inline-block' : 'none';
+            });
+            // If sources are turned OFF, existing ##i## markers might become visible if not handled by processSources.
+            // The current processSources will remove them if showSources is false.
+            // To ensure all messages are updated, one might need to iterate and re-process their content.
+            // For now, this focuses on the panel and new messages.
         });
         
-        // This function now SETS the hidden controls based on JS variables
-        // and is called ONCE on page load.
         function initializeDefaultSettings() {
-            // currentAiPersonaKey and showSources are already set by their 'let' statements.
-            // Now, update the hidden HTML controls to reflect these JS default values.
             if (personaToggleInternalEl) {
                 personaToggleInternalEl.value = currentAiPersonaKey;
             }
@@ -1244,11 +1580,13 @@ function showPersonaProfileCard(){
         // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЬ ---
     
         // Initialize chat
+        // Шаг 3: Обновите инициализацию чата при загрузке DOM:
         document.addEventListener('DOMContentLoaded', () => {
-    initializeDefaultSettings();       // existing line
-    showPersonaProfileCard();          // <-- add this line
-    handleNextScenarioStep();          // existing line
-});
+            initializeDefaultSettings();      
+            showPersonaProfileCard();         
+            updateCitationsPanel(); // <--- ДОБАВИТЬ ЭТУ СТРОКУ (Added this line)
+            handleNextScenarioStep();         
+        });
     </script>
 </body>
 </html>
