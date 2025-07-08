@@ -1504,27 +1504,36 @@
         addMessageToChat(step.text, 'ai'); 
         currentScenarioIndex++;
         if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'PO_INPUT') {
-            userInputEl.value = chatScenario[currentScenarioIndex].expectedText; 
-            userInputEl.disabled = false;
-            sendButtonEl.disabled = !userInputEl.value.trim();
-            userInputEl.focus();
-            userInputEl.style.height = 'auto'; 
-            userInputEl.style.height = (userInputEl.scrollHeight) + 'px'; 
-            
-            if (!firstUserInputActivated && sendButtonEl && !sendButtonEl.disabled) {
-                sendButtonEl.classList.add('highlight-send-button');
-                firstUserInputActivated = true; 
-                setTimeout(() => {
-                    sendButtonEl.classList.remove('highlight-send-button');
-                }, 3500); 
+    userInputEl.disabled = true;
+    sendButtonEl.disabled = true;
+
+    const userSimulatedInput = chatScenario[currentScenarioIndex].expectedText;
+    
+    setTimeout(() => {
+        userInputEl.value = userSimulatedInput;
+        userInputEl.style.height = 'auto';
+        userInputEl.style.height = (userInputEl.scrollHeight) + 'px';
+
+        userInputEl.disabled = false;
+        sendButtonEl.disabled = false;
+
+        // Highlight send button for first user input only
+        if (!firstUserInputActivated) {
+            sendButtonEl.classList.add('highlight-send-button');
+            firstUserInputActivated = true;
+            setTimeout(() => {
+                sendButtonEl.classList.remove('highlight-send-button');
+            }, 3500);
+        }
+
+        // Optional: Auto-submit the input after a short delay (you can remove this if not needed)
+        autoSendTimer = setTimeout(() => {
+            if (!sendButtonEl.disabled) {
+                handleSendMessage();
             }
-            
-            autoSendTimer = setTimeout(() => {
-                if (!sendButtonEl.disabled) { 
-                    handleSendMessage();
-                }
-            }, 160000); 
-        } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
+        }, 60000); // <- hier Delay bis Auto-Absenden
+    }, 1200); // <- hier Delay bis der Text erscheint
+} else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
             handleNextScenarioStep(); 
         } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
             handleNextScenarioStep(); 
