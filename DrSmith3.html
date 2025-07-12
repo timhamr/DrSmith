@@ -1020,7 +1020,7 @@
   </div>
 
   <div class="footer-copyright">
-    &copy; 2025 Dr. Smith Medical Clinic. All rights reserved.
+    © 2025 Dr. Smith Medical Clinic. All rights reserved.
   </div>
 </footer>
 
@@ -1308,7 +1308,7 @@
                     const sourceKeyForButton = capturedSourceName.trim(); // This is the actual source name
                     const tooltipId = `tooltip-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
                     // Tooltip should display the actual source name
-                    const cleanCitationTextForTooltip = sourceKeyForButton.replace(/"/g, '&quot;'); 
+                    const cleanCitationTextForTooltip = sourceKeyForButton.replace(/"/g, '"'); 
 
                     const buttonHtml = `<button class="source-button" aria-describedby="${tooltipId}" title="${cleanCitationTextForTooltip}">i<span class="tooltip-text" role="tooltip" id="${tooltipId}">${cleanCitationTextForTooltip}<span class="tooltip-arrow"></span></span></button>`;
                     // Preserve leading space if present
@@ -1502,38 +1502,51 @@
                     }
                     addMessageToChat(step.text, 'ai'); 
                     currentScenarioIndex++;
-if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'PO_INPUT') {
+                   if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'PO_INPUT') {
     userInputEl.disabled = true;
     sendButtonEl.disabled = true;
 
     const userSimulatedInput = chatScenario[currentScenarioIndex].expectedText;
     
+    const wordCount = step.text.split(/\s+/).length;
+    const readingDelay = 1000 + (wordCount * 200); // Base 1s + 200ms per word
+    
     setTimeout(() => {
-        userInputEl.value = userSimulatedInput;
-        userInputEl.style.height = 'auto';
-        userInputEl.style.height = (userInputEl.scrollHeight) + 'px';
+        userInputEl.disabled = false; // Enable before typing to make it look active
+        userInputEl.focus(); // Optional: focus to simulate user typing
 
-        userInputEl.disabled = false;
-        sendButtonEl.disabled = false;
+        let i = 0;
+        const typingSpeed = 50; // ms per character, adjust as needed
+        function typeUserInput() {
+            if (i < userSimulatedInput.length) {
+                userInputEl.value += userSimulatedInput.charAt(i);
+                userInputEl.style.height = 'auto';
+                userInputEl.style.height = (userInputEl.scrollHeight) + 'px';
+                i++;
+                setTimeout(typeUserInput, typingSpeed);
+            } else {
+                // Highlight send button for first user input only
+                if (!firstUserInputActivated) {
+                    sendButtonEl.classList.add('highlight-send-button');
+                    firstUserInputActivated = true;
+                    setTimeout(() => {
+                        sendButtonEl.classList.remove('highlight-send-button');
+                    }, 3500);
+                }
 
-        // Highlight send button for first user input only
-        if (!firstUserInputActivated) {
-            sendButtonEl.classList.add('highlight-send-button');
-            firstUserInputActivated = true;
-            setTimeout(() => {
-                sendButtonEl.classList.remove('highlight-send-button');
-            }, 3500);
-        }
+                sendButtonEl.disabled = false;
 
-        // Optional: Auto-submit the input after a short delay (you can remove this if not needed)
-        autoSendTimer = setTimeout(() => {
-            if (!sendButtonEl.disabled) {
-                handleSendMessage();
+                // Optional: Auto-submit the input after a short delay (you can remove this if not needed)
+                autoSendTimer = setTimeout(() => {
+                    if (!sendButtonEl.disabled) {
+                        handleSendMessage();
+                    }
+                }, 60000); // <- hier Delay bis Auto-Absenden
             }
-        }, 60000); // <- hier Delay bis Auto-Absenden
-    }, 1200); // <- hier Delay bis der Text erscheint
-}
- else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
+        }
+        typeUserInput();
+    }, readingDelay); // Dynamic reading delay
+} else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
                         handleNextScenarioStep(); 
                     } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
                         handleNextScenarioStep(); 
@@ -1598,7 +1611,7 @@ if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIn
         mobileMenuToggleEl.addEventListener('click', () => {
             const isActive = mainNavEl.classList.toggle('mobile-active');
             mobileMenuToggleEl.classList.toggle('active', isActive);
-            mobileMenuToggleEl.innerHTML = isActive ? '&#x2715;' : '&#9776;'; 
+            mobileMenuToggleEl.innerHTML = isActive ? '✕' : '☰'; 
             document.body.style.overflow = isActive ? 'hidden' : ''; 
 
             if (isActive) {
@@ -1606,7 +1619,7 @@ if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIn
                     link.addEventListener('click', () => {
                         mainNavEl.classList.remove('mobile-active');
                         mobileMenuToggleEl.classList.remove('active');
-                        mobileMenuToggleEl.innerHTML = '&#9776;';
+                        mobileMenuToggleEl.innerHTML = '☰';
                         document.body.style.overflow = '';
                     }, { once: true }); 
                 });
