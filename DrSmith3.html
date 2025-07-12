@@ -1551,7 +1551,7 @@
                     } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
                         handleNextScenarioStep(); 
                     }
-                }, 500); // Just minimal delay
+                }, 200); // Just minimal delay
             } else if (step.type === 'END_SCENARIO') {
                 userInputEl.placeholder = "Consultation ended.";
                 setTimeout(() => { 
