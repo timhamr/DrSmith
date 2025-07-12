@@ -1509,6 +1509,9 @@
 
     const userSimulatedInput = chatScenario[currentScenarioIndex].expectedText;
     
+    const wordCount = step.text.split(/\s+/).length;
+    const readingDelay = 1000 + (wordCount * 200); // Base 1s + 200ms per word
+    
     setTimeout(() => {
         userInputEl.disabled = false; // Enable before typing to make it look active
         userInputEl.focus(); // Optional: focus to simulate user typing
@@ -1543,7 +1546,7 @@
             }
         }
         typeUserInput();
-    }, 1200); // <- hier Delay bis der Text erscheint
+    }, readingDelay); // Dynamic reading delay
 } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
             handleNextScenarioStep(); 
         } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
