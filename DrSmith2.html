@@ -241,10 +241,7 @@
             border-bottom: none; /* Убираем двойные линии */
         }
         /* JS потребуется для раскрытия подменю по клику на мобильных */
-        .main-nav .nav-item.has-dropdown > .nav-link {
-            /* Можно добавить стрелку для раскрывающихся списков */
-            /* position: relative; */
-        }
+
         /* .main-nav .nav-item.has-dropdown > .nav-link::after {
             content: '▼';
             font-size: 0.7em;
@@ -276,10 +273,7 @@
             display: block !important; /* Показываем кнопку бургер-меню */
             z-index: 1100; /* Чтобы была поверх меню, когда оно выдвигается */
         }
-        .mobile-menu-toggle.active {
-            /* Стили для кнопки "X" (если меняем через JS) */
-            /* Например, position: fixed; right: 15px; top: 15px; */
-        }
+
     }
 
     /* --- КОНЕЦ НОВЫХ/ОБНОВЛЕННЫХ СТИЛЕЙ ДЛЯ HEADER --- */
@@ -747,10 +741,7 @@
     color: var(--text-color-light);
 }
 
-/* Правая колонка */
-.footer-column-3 {
-    /* Стили по умолчанию подходят, можно настроить text-align, если нужно */
-}
+
 .footer-links-list {
     list-style: none;
     padding: 0;
@@ -786,9 +777,7 @@
         gap: 30px; /* Отступ между блоками при вертикальном расположении */
         text-align: center; /* Центрирование текста в колонках */
     }
-    .footer-column {
-         /* Убираем индивидуальные выравнивания, если они были */
-    }
+
     .footer-column-1 .footer-address,
     .footer-column-1 .footer-clinic-name {
         text-align: center; /* Явно центрируем адрес */
@@ -1165,109 +1154,125 @@
     
     
         const chatScenario = [
-  {
-    type: 'CB',
-    text: "Welcome to Dr. Smith Medical Clinic! I am the practice's virtual assistant and will be happy to help you. Before we start, please indicate your name and telephonenumber in case the practice needs to contact you."
-  },
     {
-    type: 'PO_INPUT',
-    expectedText: "Hi, my name is Alex and you can reach me on +12 345678910."
-  },
-  {
-    type: 'CB',
-    text: "Thank you. What can I do for you?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "I would like to book an appointment at the practice."
-  },
-  {
-    type: 'CB',
-    text: "All right. Firstly, I need some personal information. Are you already a patient with us?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "Not yet."
-  },
-  {
-    type: 'CB',
-    text: "Okay. Have you already been to another doctor regarding your issue?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "No, I have not yet."
-  },
-  {
-    type: 'CB',
-    text: "All right. What symptoms do you have?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "I have pain in my hip for several days."
-  },
-  {
-    type: 'CB',
-    text: "Okay. Do you prefer to be treated by a particular doctor at our practice?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "No, I do not have any preferences."
-  },
-  {
-    type: 'CB',
-    text: "I see. Now let us talk about your availability.\nAre you flexible when it comes to the appointment time and date?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "Yes, I am."
-  },
-  {
-    type: 'CB',
-    text: "All right. The practice is currently very busy. Therefore, I cannot guarantee an appointment. However, in general we have regularly appointments available on Wednesday afternoons, between 13:00 and 17:00. Does an appointment during this time generally suit you?"
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "Wednesdays in the afternoon work fine."
-  },
-  {
-    type: 'CB',
-    text: "Thank you very much. I will now forward your appointment request to the practice."
-  },
-  {
-    type: 'LONG_CB',
-    text: "I have successfully forwarded your appointment request to the practice.\nThe practice will contact you tomorrow on the telephone number you provided in the beginning of our chat to agree the exact date of the appointment with you."
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "What do I have to bring along to the appointment?"
-  },
-  {
-    type: 'LONG_CB',
-    text: "Please bring your ID, your insurance card and your vaccination certificate to the appointment."
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "How long is the appointment expected to take?"
-  },
-  {
-    type: 'LONG_CB',
-    text: "The appointment is expected to last one hour, but please allow a little more time if it does take longer."
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "Okay, I got it."
-  },
-  {
-    type: 'CB',
-    text: "Do you have any other questions? If not feel free to close the chat."
-  },
-  {
-    type: 'PO_INPUT',
-    expectedText: "No, I finish now."
-  },
-  {
-    type: 'END_SCENARIO'
-  }
+        type: 'CB',
+        text: "Welcome to Dr. Smith Medical Clinic! I am the practice's virtual assistant and will be happy to help you. Before we start, please indicate your name and phone number in case the practice needs to contact you."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Hi, my name is Alex and you can reach me on +1 234 567 8910."
+    },
+    {
+        type: 'CB',
+        text: "Thank you. What can I do for you?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "I would like to book an appointment at the practice."
+    },
+    {
+        type: 'CB',
+        text: "All right. Firstly, I need some personal information. Are you already a patient with us?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "No, not yet."
+    },
+    {
+        type: 'CB',
+        text: "Okay. Have you already been to another doctor regarding your issue?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "No, I have not yet."
+    },
+    {
+        type: 'CB',
+        text: "All right. What symptoms do you have?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "I have pain in my hip for several days."
+    },
+    {
+        type: 'CB',
+        text: "Okay. Do you prefer to be treated by a particular doctor at our practice?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "No I do not have any preferences."
+    },
+    {
+        type: 'CB',
+        text: "I see. Now let us talk about your availability. Are you flexible when it comes to the appointment time and date?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Yes, I am pretty flexible regarding the time and date."
+    },
+    {
+        type: 'CB',
+        text: "All right. The practice is currently very busy. Therefore, I cannot guarantee an appointment. However, in general we have regularly appointments available on Wednesday afternoons, between 13:00 and 17:00. Does an appointment during this time generally suit you?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Wednesdays in the afternoon work fine for me."
+    },
+    {
+        type: 'CB',
+        text: "Thank you very much for the information provided. I will now forward your appointment request to the practice."
+    },
+    {
+        type: 'CB',
+        text: "I have successfully forwarded your appointment request to the practice. The practice will contact you tomorrow on the telephone number you provided in the beginning of our chat to agree the exact date and time of the appointment with you. Do you have any questions regarding your appointment?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Yes. How long is the expected waiting time before the appointment?"
+    },
+    {
+        type: 'CB',
+        text: "Patients are generally seen as close to their scheduled appointment times as possible. However, based on experience, it can be difficult to avoid delays completely, so some waiting time before the consultation may occur. Therefore, please allow some extra time for waiting. Would you like me to give you more information about the timing of your appointment?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Yes. How long is the appointment itself expected to take?"
+    },
+    {
+        type: 'CB',
+        text: "The appointment is expected to last half an hour, but please allow a little more time in case it takes longer. Occasionally, there may be slight delays or additional questions that extend the visit by a few minutes."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Okay. What do I have to bring along to the appointment?"
+    },
+    {
+        type: 'CB',
+        text: "Please bring your ID, your insurance card, and your vaccination certificate to the appointment. These documents are required to verify your identity, ensure proper billing, and keep your medical records up to date."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "Okay, I got it. Just one more question: Can I come by car and park near the practice?"
+    },
+    {
+        type: 'CB',
+        text: "Yes, you can park near the practice. We have a small patient parking lot behind the building, accessible via Maple Street. There is also metered street parking nearby and a public garage within walking distance. During peak hours, we recommend arriving a bit early to find parking. Would you like more information on how to get to the practice?"
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "No, I got it."
+    },
+    {
+        type: 'CB',
+        text: "Do you have any other questions? If not feel free to close the chat."
+    },
+    {
+        type: 'PO_INPUT',
+        expectedText: "No, I am finished now."
+    },
+    {
+        type: 'END_SCENARIO'
+    }
 ];
     
         let currentScenarioIndex = 0;
@@ -1548,11 +1553,11 @@
         typeUserInput();
     }, readingDelay); // Dynamic reading delay
 } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
-            handleNextScenarioStep(); 
-        } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
-            handleNextScenarioStep(); 
-        }
-    }, delay); // ⬅️ Use dynamic delay
+                        handleNextScenarioStep(); 
+                    } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
+                        handleNextScenarioStep(); 
+                    }
+                }, delay); // ⬅️ Use dynamic delay
             } else if (step.type === 'END_SCENARIO') {
                 userInputEl.placeholder = "Consultation ended.";
                 setTimeout(() => { 
