@@ -241,10 +241,7 @@
             border-bottom: none; /* Убираем двойные линии */
         }
         /* JS потребуется для раскрытия подменю по клику на мобильных */
-        .main-nav .nav-item.has-dropdown > .nav-link {
-            /* Можно добавить стрелку для раскрывающихся списков */
-            /* position: relative; */
-        }
+
         /* .main-nav .nav-item.has-dropdown > .nav-link::after {
             content: '▼';
             font-size: 0.7em;
@@ -276,10 +273,7 @@
             display: block !important; /* Показываем кнопку бургер-меню */
             z-index: 1100; /* Чтобы была поверх меню, когда оно выдвигается */
         }
-        .mobile-menu-toggle.active {
-            /* Стили для кнопки "X" (если меняем через JS) */
-            /* Например, position: fixed; right: 15px; top: 15px; */
-        }
+
     }
 
     /* --- КОНЕЦ НОВЫХ/ОБНОВЛЕННЫХ СТИЛЕЙ ДЛЯ HEADER --- */
@@ -747,10 +741,7 @@
     color: var(--text-color-light);
 }
 
-/* Правая колонка */
-.footer-column-3 {
-    /* Стили по умолчанию подходят, можно настроить text-align, если нужно */
-}
+
 .footer-links-list {
     list-style: none;
     padding: 0;
@@ -786,9 +777,7 @@
         gap: 30px; /* Отступ между блоками при вертикальном расположении */
         text-align: center; /* Центрирование текста в колонках */
     }
-    .footer-column {
-         /* Убираем индивидуальные выравнивания, если они были */
-    }
+
     .footer-column-1 .footer-address,
     .footer-column-1 .footer-clinic-name {
         text-align: center; /* Явно центрируем адрес */
@@ -1167,11 +1156,11 @@
         const chatScenario = [
   {
     type: 'GREETING_CB',
-    text: "Welcome to Dr. Smith Medical Clinic! I am the practice's virtual assistant and will be happy to help you.\nBefore we start, please indicate your name and telephonenumber in case the practice needs to contact you."
+    text: "Welcome to Dr. Smith Medical Clinic! I am the practice's virtual assistant and will be happy to help you. Before we start, please indicate your name and phone number in case the practice needs to contact you."
   },
   {
     type: 'PO_INPUT',
-    expectedText: "Hi, my name is Alex and you can reach me on +12 345678910."
+    expectedText: "Hi, my name is Alex and you can reach me on +1 234 567 8910."
   },
   {
     type: 'CB',
@@ -1191,11 +1180,11 @@
   },
   {
     type: 'CB',
-    text: "Okay. Now let us talk in more detail about your symptoms.\nHow long have you had hip pain?"
+    text: "Okay. Now let us talk in more detail about your symptoms. How long have you had hip pain?"
   },
   {
     type: 'PO_INPUT',
-    expectedText: "The pain has been present for about a week."
+    expectedText: "The pain has been present for several days."
   },
   {
     type: 'CB',
@@ -1207,11 +1196,11 @@
   },
   {
     type: 'CB',
-    text: "Okay. Is the pain permanently noticeable or does it only occur with certain movements, for example when walking or sitting?"
+    text: "Okay. Does the pain occur primarily while walking, afterward, or even at rest or during the night?"
   },
   {
     type: 'PO_INPUT',
-    expectedText: "The pain intensifies when I move and turn."
+    expectedText: "Mostly after movement. Especially after training, there is a pulling sensation on the outside of the hip. It does not hurt when I am lying down or at rest."
   },
   {
     type: 'CB',
@@ -1223,39 +1212,55 @@
   },
   {
     type: 'CB',
-    text: "Okay. Have you noticed any redness or swelling around the hip?"
+    text: "Have you noticed any local redness, swelling, numbness or experienced fever within the last days?"
   },
   {
     type: 'PO_INPUT',
-    expectedText: "No. There is absolutely nothing visible."
+    expectedText: "No. I have not noticed or experienced any of the above."
   },
   {
     type: 'CB',
-    text: "Thank you very much. I now have enough information for an initial assessment."
+    text: "Thank you very much for the information provided. I now have all relevant details for an initial assessment."
   },
   {
     type: 'CB',
-    text: "I have successfully completed the medical assessment for you.\nYou probably have a mechanical overload of the hip joint. This is not unusual with sporting activities such as jogging and is easily treatable. Your symptoms should subside on their own over the next few hours to days.\nThe practice will contact you tomorrow on the telephone number you provided in the beginning of our chat to check the progress of your symptoms and discuss the next steps with you."
+    text: "Based on clinically established patterns and a structured assessment of your responses, the symptoms are most consistent with a functional overload of the lateral hip joint – a common consequence of increased physical activity. There is no indication of severe hip joint inflammation or any other critical condition. In typical cases, symptoms of this kind improve gradually within approximately one week. The practice will contact you tomorrow via the phone number provided at the beginning of the chat to follow up on the progress of your symptoms. Given the discomfort you are experiencing, would you like me to provide some measures you can immediately take to ease it?"
   },
   {
     type: 'PO_INPUT',
-    expectedText: "What can I do to reduce the pain?"
+    expectedText: "Yes, please. What can I do to reduce the pain?"
   },
   {
     type: 'CB',
-    text: "To reduce the pain and speed up the healing process, I recommend targeted stretching exercise for the hip muscles and localised cold applications."
+    text: "Aside from general rest (reduced walking) and cooling of the left hip (2–3 times a day for 15 minutes), you can try the following to reduce the pain: - Targeted stretching exercises for the hip muscles - Non-prescription medications or natural remedies Would you like me to provide more information on any of these points?"
   },
   {
     type: 'PO_INPUT',
-    expectedText: "Which stretching exercise would help me?"
+    expectedText: "Yes. Which stretching exercise would help me?"
   },
-{
-  type: 'CB',
-  text: "Sit with legs straight, lean forward from the hips with a straight back, reach toward your feet, and hold the gentle stretch in your hips for 20–30 seconds."
-},
+  {
+    type: 'CB',
+    text: "The most effective exercise for lateral hip pain is the \"Hipster\" stretch, which releases tightness on the outer hip."
+  },
   {
     type: 'PO_INPUT',
-    expectedText: "Okay, I got it."
+    expectedText: "Okay. Can you explain this stretching exercise to me?"
+  },
+  {
+    type: 'CB',
+    text: "Sit with your legs straight, lean forward from the hips with a straight back, reach toward your feet, and hold the gentle stretch in your hips for 20–30 seconds. Return to the starting position and repeat 2–3 times, ideally twice a day."
+  },
+  {
+    type: 'PO_INPUT',
+    expectedText: "Okay, I got it. Just one more question: What alternative treatments would be helpful in my case?"
+  },
+  {
+    type: 'CB',
+    text: "The best alternative treatment in your case are quark compresses, which help relieve pain and soothe the affected area. They are also an effective preventive measure to avoid local swelling. Would you like more information on applying quark compresses?"
+  },
+  {
+    type: 'PO_INPUT',
+    expectedText: "No, I am already familiar with their application."
   },
   {
     type: 'CB',
@@ -1263,7 +1268,7 @@
   },
   {
     type: 'PO_INPUT',
-    expectedText: "No, I finish now."
+    expectedText: "No, I am finished now."
   },
   {
     type: 'END_SCENARIO'
