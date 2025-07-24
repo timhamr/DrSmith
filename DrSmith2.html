@@ -241,7 +241,6 @@
             border-bottom: none; /* Убираем двойные линии */
         }
         /* JS потребуется для раскрытия подменю по клику на мобильных */
-
         /* .main-nav .nav-item.has-dropdown > .nav-link::after {
             content: '▼';
             font-size: 0.7em;
@@ -273,7 +272,6 @@
             display: block !important; /* Показываем кнопку бургер-меню */
             z-index: 1100; /* Чтобы была поверх меню, когда оно выдвигается */
         }
-
     }
 
     /* --- КОНЕЦ НОВЫХ/ОБНОВЛЕННЫХ СТИЛЕЙ ДЛЯ HEADER --- */
@@ -741,7 +739,6 @@
     color: var(--text-color-light);
 }
 
-
 .footer-links-list {
     list-style: none;
     padding: 0;
@@ -777,7 +774,6 @@
         gap: 30px; /* Отступ между блоками при вертикальном расположении */
         text-align: center; /* Центрирование текста в колонках */
     }
-
     .footer-column-1 .footer-address,
     .footer-column-1 .footer-clinic-name {
         text-align: center; /* Явно центрируем адрес */
@@ -1054,66 +1050,6 @@
                 avatarValue: ""
             }
         };
-
-        // Шаг 3: Добавьте объект allSourcesDetails и переменную citedSourcesInSession:
-        const allSourcesDetails = {
-    "Verified in Internal Appointment Management System": {
-        titleFromOriginalList: "Verified in Internal Appointment Management System",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Appointment data verified against patient records."
-    },
-    "Clinic Contact Directory": {
-        titleFromOriginalList: "Clinic Contact Directory",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Clinic staff and department contact list."
-    },
-    "Pet Owner Pre-Op Guidelines, revised March 2024": {
-        titleFromOriginalList: "Pet Owner Pre-Op Guidelines (revised March 2024)",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Pre-surgery instructions for pet owners."
-    },
-    "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024": {
-        titleFromOriginalList: "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024",
-        url: "vaa.org",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=vaa.org",
-        description: "Normothermia maintenance during anesthesia."
-    },
-    "Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024": {
-        titleFromOriginalList: "Kudo, A. et al. Peripheral Warming for Prevention of Hypothermia in Small Dogs, 2024",
-        url: "savj.org",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=savj.org",
-        description: "Study on warming pads reducing hypothermia in small dogs."
-    },
-    "Internal Clinic Protocol 09.10, last reviewed March 2024": {
-        titleFromOriginalList: "Internal Clinic Protocol 09.10: Perioperative Temperature Management (last reviewed March 2024)",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Clinic procedures for patient temperature control."
-    },
-    "MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023": {
-        titleFromOriginalList: "Merck Veterinary Manual – Chapter 15: Anaesthetic Management (2023)",
-        url: "merckvetmanual.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=merckvetmanual.com",
-        description: "Overview of anesthesia management in animals."
-    },
-    "Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024": {
-        titleFromOriginalList: "Clinic Anaesthesia Monitoring Standards, Protocol № 5.10 (updated February 2024)",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Minimum monitoring requirements during anesthesia."
-    },
-    "AVMA Anaesthesia Safety Report, 2020": {
-        titleFromOriginalList: "AVMA Anaesthesia Safety Report, 2020",
-        url: "avma.org",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=avma.org",
-        description: "Report on anesthesia safety and adverse events."
-    }
-};
-
-
         let citedSourcesInSession = new Set();
 
     /* ---------- Profile Card helper (adds one card, then leaves it) ------------ */
@@ -1154,7 +1090,7 @@
     
     
         const chatScenario = [
-    {
+        {
         type: 'CB',
         text: "Welcome to Dr. Smith Medical Clinic! I am the practice's virtual assistant and will be happy to help you. Before we start, please indicate your name and phone number in case the practice needs to contact you."
     },
@@ -1223,9 +1159,13 @@
         text: "Thank you very much for the information provided. I will now forward your appointment request to the practice."
     },
     {
-        type: 'CB',
-        text: "I have successfully forwarded your appointment request to the practice. The practice will contact you tomorrow on the phone number you provided in the beginning of our chat to agree the exact date and time of the appointment with you. Do you have any questions regarding your appointment?"
-    },
+        type: 'LONG_CB',
+text: `I have successfully forwarded your appointment request to the practice.
+
+The practice will contact you tomorrow on the phone number you provided in the beginning of our chat to agree the exact date and time of the appointment with you.
+
+Do you have any questions regarding your appointment?`
+},
     {
         type: 'PO_INPUT',
         expectedText: "Yes. How long is the expected waiting time before the appointment?"
@@ -1239,7 +1179,7 @@
         expectedText: "Yes. How long is the appointment itself expected to take?"
     },
     {
-        type: 'CB',
+        type: 'LONG_CB',
         text: "The appointment is expected to last half an hour, but please allow a little more time in case it takes longer. Occasionally, there may be slight delays or additional questions that extend the visit by a few minutes."
     },
     {
@@ -1247,7 +1187,7 @@
         expectedText: "Okay. What do I have to bring along to the appointment?"
     },
     {
-        type: 'CB',
+        type: 'LONG_CB',
         text: "Please bring your ID, your insurance card, and your vaccination certificate to the appointment. These documents are required to verify your identity, ensure proper billing, and keep your medical records up to date."
     },
     {
@@ -1553,11 +1493,11 @@
         typeUserInput();
     }, readingDelay); // Dynamic reading delay
 } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
-                        handleNextScenarioStep(); 
-                    } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
-                        handleNextScenarioStep(); 
-                    }
-                }, delay); // ⬅️ Use dynamic delay
+            handleNextScenarioStep(); 
+        } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
+            handleNextScenarioStep(); 
+        }
+    }, delay); // ⬅️ Use dynamic delay
             } else if (step.type === 'END_SCENARIO') {
                 userInputEl.placeholder = "Consultation ended.";
                 setTimeout(() => { 

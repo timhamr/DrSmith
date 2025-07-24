@@ -1054,66 +1054,6 @@
                 avatarValue: ""
             }
         };
-
-        // Шаг 3: Добавьте объект allSourcesDetails и переменную citedSourcesInSession:
-        const allSourcesDetails = {
-    "Verified in Internal Appointment Management System": {
-        titleFromOriginalList: "Verified in Internal Appointment Management System",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Appointment data verified against patient records."
-    },
-    "Clinic Contact Directory": {
-        titleFromOriginalList: "Clinic Contact Directory",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Clinic staff and department contact list."
-    },
-    "Pet Owner Pre-Op Guidelines, revised March 2024": {
-        titleFromOriginalList: "Pet Owner Pre-Op Guidelines (revised March 2024)",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Pre-surgery instructions for pet owners."
-    },
-    "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024": {
-        titleFromOriginalList: "Anaesthetic Hypothermia Prevention Guidelines, Veterinary Anaesthesia Association, 2024",
-        url: "vaa.org",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=vaa.org",
-        description: "Normothermia maintenance during anesthesia."
-    },
-    "Kudo, A. et al. Peripheral warming for prevention of hypothermia in small dogs, 2024": {
-        titleFromOriginalList: "Kudo, A. et al. Peripheral Warming for Prevention of Hypothermia in Small Dogs, 2024",
-        url: "savj.org",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=savj.org",
-        description: "Study on warming pads reducing hypothermia in small dogs."
-    },
-    "Internal Clinic Protocol 09.10, last reviewed March 2024": {
-        titleFromOriginalList: "Internal Clinic Protocol 09.10: Perioperative Temperature Management (last reviewed March 2024)",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Clinic procedures for patient temperature control."
-    },
-    "MSD Veterinary Manual, Chapter 15: Anaesthetic Management, 2023": {
-        titleFromOriginalList: "Merck Veterinary Manual – Chapter 15: Anaesthetic Management (2023)",
-        url: "merckvetmanual.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=merckvetmanual.com",
-        description: "Overview of anesthesia management in animals."
-    },
-    "Clinic Anaesthesia Monitoring Standards, Protocol №5.10, updated February 2024": {
-        titleFromOriginalList: "Clinic Anaesthesia Monitoring Standards, Protocol № 5.10 (updated February 2024)",
-        url: "tierzahnzentrum.com",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=tierzahnzentrum.com",
-        description: "Minimum monitoring requirements during anesthesia."
-    },
-    "AVMA Anaesthesia Safety Report, 2020": {
-        titleFromOriginalList: "AVMA Anaesthesia Safety Report, 2020",
-        url: "avma.org",
-        faviconUrl: "https://www.google.com/s2/favicons?sz=64&domain_url=avma.org",
-        description: "Report on anesthesia safety and adverse events."
-    }
-};
-
-
         let citedSourcesInSession = new Set();
 
     /* ---------- Profile Card helper (adds one card, then leaves it) ------------ */
@@ -1225,8 +1165,12 @@
     },
     {
         type: 'CB',
-        text: "I have successfully forwarded your appointment request to the practice. The practice will contact you tomorrow on the phone number you provided in the beginning of our chat to agree the exact date and time of the appointment with you. Do you have any questions regarding your appointment?"
-    },
+text: `I have successfully forwarded your appointment request to the practice.
+
+The practice will contact you tomorrow on the phone number you provided in the beginning of our chat to agree the exact date and time of the appointment with you.
+
+Do you have any questions regarding your appointment?`
+},
     {
         type: 'PO_INPUT',
         expectedText: "Yes. How long is the expected waiting time before the appointment?"
