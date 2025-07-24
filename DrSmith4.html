@@ -1512,7 +1512,14 @@ Would you like me to provide more information on any of these points?`
     
             if (step.type === 'GREETING_CB' || step.type === 'CB' || step.type === 'LONG_CB') {
                 const typingIndicator = showTypingIndicator(); 
-                const delay = (step.type === 'LONG_CB') ? 5000 : 2000;
+                let delay;
+                if (step.type === 'LONG_CB') {
+                    delay = 5000;
+                } else if (step.type === 'GREETING_CB') {
+                    delay = 200;
+                } else {
+                    delay = 2000;
+                }
                 setTimeout(() => {
                     if (typingIndicator && typingIndicator.parentNode) {
                         chatMessagesEl.removeChild(typingIndicator);
