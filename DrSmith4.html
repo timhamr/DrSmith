@@ -1481,7 +1481,7 @@
             
             const messageBubbleDiv = document.createElement('div');
             messageBubbleDiv.classList.add('message', 'ai-message'); 
-            messageBubbleDiv.innerHTML = `<p></p>`;
+            messageBubbleDiv.innerHTML = `<p>${persona.name} is preparing response...</p>`;
             messageContentWrapper.appendChild(messageBubbleDiv);
             
             outerWrapper.appendChild(messageContentWrapper);
@@ -1499,8 +1499,9 @@
             sendButtonEl.disabled = true;
             clearTimeout(autoSendTimer); 
     
-            if (step.type === 'GREETING_CB' || step.type === 'CB') {
+            if (step.type === 'GREETING_CB' || step.type === 'CB' || step.type === 'LONG_CB') {
                 const typingIndicator = showTypingIndicator(); 
+                const delay = (step.type === 'LONG_CB') ? 5000 : 2000;
                 setTimeout(() => {
                     if (typingIndicator && typingIndicator.parentNode) {
                         chatMessagesEl.removeChild(typingIndicator);
@@ -1556,7 +1557,7 @@
                     } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type === 'END_SCENARIO') {
                         handleNextScenarioStep(); 
                     }
-                }, 200); // Just minimal delay
+                }, delay);
             } else if (step.type === 'END_SCENARIO') {
                 userInputEl.placeholder = "Consultation ended.";
                 setTimeout(() => { 
@@ -1666,7 +1667,7 @@
                 sourcesToggleInternalEl.checked = showSources;
             }
         }
-        // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЬ ---
+        // --- КОНЕЦ ИЗМЕНЕНИЙ ЗДЕСЯ ---
     
         // Initialize chat
         // Шаг 3: Обновите инициализацию чата при загрузке DOM:
