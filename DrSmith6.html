@@ -1516,7 +1516,7 @@ Would you like me to provide more information on any of these points?`
                 if (step.type === 'LONG_CB') {
                     // Dynamic delay based on word count, similar to reading delay for user input
                     const wordCount = step.text.split(/\s+/).length;
-                    delay = 2000 + (wordCount * 150); // Base 2s + 150ms per word
+                    delay = 2000 + (wordCount * 100); // Base 2s + 100ms per word
                 } else if (step.type === 'GREETING_CB') {
                     delay = 200;
                 } else {
