@@ -399,6 +399,10 @@
         .ai-message-wrapper .sender-name, .ai-message-wrapper .sender-title {
             margin-left: 2px; 
         }
+        .user-message-wrapper .sender-name, .user-message-wrapper .sender-title {
+            text-align: right;
+            margin-right: 2px;
+        }
 
 
         .message { 
@@ -409,7 +413,8 @@
             word-wrap: break-word;
             position: relative; 
         }
-        .message p { margin: 0 0 3px 0; white-space: pre-wrap; }
+        .message p { margin: 0 0 3px 0; white-space: normal; }
+        .user-message p { white-space: nowrap !important; }
         .message .timestamp { font-size: 0.7em; color: #888; display: block; margin-top: 4px; }
 
         .ai-message { 
@@ -1369,13 +1374,34 @@ Do you have any questions regarding your appointment?`
     
             } else { // user message
                 outerWrapper.classList.add('user-message-wrapper');
+                
+                // Add avatar placeholder for consistent layout
+                const avatarDiv = document.createElement('div');
+                avatarDiv.classList.add('avatar');
+                avatarDiv.style.visibility = 'hidden'; // Hide the avatar but keep space
+                outerWrapper.appendChild(avatarDiv);
+                
+                const messageContentWrapper = document.createElement('div');
+                messageContentWrapper.classList.add('message-content-wrapper');
+
+                const nameDiv = document.createElement('div');
+                nameDiv.classList.add('sender-name');
+                nameDiv.textContent = 'Alex';
+                messageContentWrapper.appendChild(nameDiv);
+
+                const titleDiv = document.createElement('div');
+                titleDiv.classList.add('sender-title');
+                titleDiv.textContent = '(You)';
+                messageContentWrapper.appendChild(titleDiv);
+                
                 const messageBubbleDiv = document.createElement('div');
                 messageBubbleDiv.classList.add('message', 'user-message');
     
                 const textParagraph = document.createElement('p');
                 textParagraph.textContent = text;
                 messageBubbleDiv.appendChild(textParagraph);
-                outerWrapper.appendChild(messageBubbleDiv);
+                messageContentWrapper.appendChild(messageBubbleDiv);
+                outerWrapper.appendChild(messageContentWrapper);
             }
             
             const bubbleForTimestamp = outerWrapper.querySelector('.message');

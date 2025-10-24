@@ -413,7 +413,8 @@
             word-wrap: break-word;
             position: relative; 
         }
-        .message p { margin: 0 0 3px 0; white-space: pre-wrap; }
+        .message p { margin: 0 0 3px 0; white-space: normal; }
+        .user-message p { white-space: nowrap !important; }
         .message .timestamp { font-size: 0.7em; color: #888; display: block; margin-top: 4px; }
 
         .ai-message { 
@@ -436,6 +437,8 @@
             color: var(--text-color-light); 
             border-bottom-right-radius: 5px; 
             align-self: flex-end; 
+            white-space: nowrap;
+            overflow: visible;
         }
         .user-message .timestamp { text-align: right; color: rgba(255,255,255,0.7); }
 
@@ -1442,6 +1445,12 @@ Would you like me to provide more information on any of these points?`
     
             } else { // user message
                 outerWrapper.classList.add('user-message-wrapper');
+                
+                // Add avatar placeholder for consistent layout
+                const avatarDiv = document.createElement('div');
+                avatarDiv.classList.add('avatar');
+                avatarDiv.style.visibility = 'hidden'; // Hide the avatar but keep space
+                outerWrapper.appendChild(avatarDiv);
                 
                 const messageContentWrapper = document.createElement('div');
                 messageContentWrapper.classList.add('message-content-wrapper');
