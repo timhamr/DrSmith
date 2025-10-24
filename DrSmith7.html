@@ -1586,10 +1586,7 @@ Would you like me to provide more information on any of these points?`
                 i++;
                 setTimeout(typeUserInput, typingSpeed);
             } else {
-                // Remove user typing indicator
-                if (userTypingIndicator && userTypingIndicator.parentNode) {
-                    chatMessagesEl.removeChild(userTypingIndicator);
-                }
+                // Keep user typing indicator visible
                 
                 // Highlight send button for first user input only
                 if (!firstUserInputActivated) {
