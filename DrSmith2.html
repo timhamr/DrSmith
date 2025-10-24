@@ -382,6 +382,9 @@
             flex-direction: column;
             max-width: calc(100% - 50px); 
         }
+        .user-message-wrapper .message-content-wrapper {
+            max-width: calc(100% - 10px); /* More space for user messages since avatar is hidden */
+        }
         
         .sender-name {
             font-size: 0.85em;
@@ -412,7 +415,6 @@
             position: relative; 
         }
         .message p { margin: 0 0 3px 0; white-space: normal; }
-        .user-message p { white-space: nowrap !important; }
         .message .timestamp { font-size: 0.7em; color: #888; display: block; margin-top: 4px; }
 
         .ai-message { 
@@ -1176,7 +1178,7 @@ Do you have any questions regarding your appointment?`
         expectedText: "Yes. How long is the expected waiting time before the appointment?"
     },
     {
-        type: 'CB',
+        type: 'LONG_CB',
         text: "Patients are generally seen as close to their scheduled appointment times as possible. However, based on experience, it can be difficult to avoid delays completely, so some waiting time before the consultation may occur. Therefore, please allow some extra time for waiting. Would you like me to give you more information about the timing of your appointment?"
     },
     {
@@ -1200,7 +1202,7 @@ Do you have any questions regarding your appointment?`
         expectedText: "Okay, I got it. Just one more question: Can I come by car and park near the practice?"
     },
     {
-        type: 'CB',
+        type: 'LONG_CB',
         text: "Yes, you can park near the practice. We have a small patient parking lot behind the building, accessible via Maple Street. There is also metered street parking nearby and a public garage within walking distance. During peak hours, we recommend arriving a bit early to find parking. Would you like more information on how to get to the practice?"
     },
     {

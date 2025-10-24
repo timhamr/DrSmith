@@ -384,6 +384,9 @@
             flex-direction: column;
             max-width: calc(100% - 50px); 
         }
+        .user-message-wrapper .message-content-wrapper {
+            max-width: calc(100% - 10px); /* More space for user messages since avatar is hidden */
+        }
         
         .sender-name {
             font-size: 0.85em;
@@ -414,7 +417,6 @@
             position: relative; 
         }
         .message p { margin: 0 0 3px 0; white-space: normal; }
-        .user-message p { white-space: nowrap !important; }
         .message .timestamp { font-size: 0.7em; color: #888; display: block; margin-top: 4px; }
 
         .ai-message { 
