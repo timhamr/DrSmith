@@ -1469,11 +1469,11 @@ Do you have any questions regarding your appointment?`
     const typingIndicator = showTypingIndicator(); 
     let delay;
     if (step.type === 'LONG_CB') {
-        delay = 5000;
+        delay = 20000;
     } else if (step.type === 'GREETING_CB') {
         delay = 200;
     } else {
-        delay = 2000;
+        delay = 5000;
     }
     setTimeout(() => {
         if (typingIndicator && typingIndicator.parentNode) {
