@@ -1493,39 +1493,31 @@ Do you have any questions regarding your appointment?`
     const readingDelay = 1000 + (wordCount * 200); // Base 1s + 200ms per word
     
     setTimeout(() => {
-        userInputEl.disabled = false; // Enable before typing to make it look active
-        userInputEl.focus(); // Optional: focus to simulate user typing
+        userInputEl.disabled = false;
+        userInputEl.focus();
 
-        let i = 0;
-        const typingSpeed = 50; // ms per character, adjust as needed
-        function typeUserInput() {
-            if (i < userSimulatedInput.length) {
-                userInputEl.value += userSimulatedInput.charAt(i);
-                userInputEl.style.height = 'auto';
-                userInputEl.style.height = (userInputEl.scrollHeight) + 'px';
-                i++;
-                setTimeout(typeUserInput, typingSpeed);
-            } else {
-                // Highlight send button for first user input only
-                if (!firstUserInputActivated) {
-                    sendButtonEl.classList.add('highlight-send-button');
-                    firstUserInputActivated = true;
-                    setTimeout(() => {
-                        sendButtonEl.classList.remove('highlight-send-button');
-                    }, 3500);
-                }
+        // Instantly set the user input value (no typing animation)
+        userInputEl.value = userSimulatedInput;
+        userInputEl.style.height = 'auto';
+        userInputEl.style.height = (userInputEl.scrollHeight) + 'px';
 
-                sendButtonEl.disabled = false;
-
-                // Optional: Auto-submit the input after a short delay (you can remove this if not needed)
-                autoSendTimer = setTimeout(() => {
-                    if (!sendButtonEl.disabled) {
-                        handleSendMessage();
-                    }
-                }, 60000); // <- hier Delay bis Auto-Absenden
-            }
+        // Highlight send button for first user input only
+        if (!firstUserInputActivated) {
+            sendButtonEl.classList.add('highlight-send-button');
+            firstUserInputActivated = true;
+            setTimeout(() => {
+                sendButtonEl.classList.remove('highlight-send-button');
+            }, 3500);
         }
-        typeUserInput();
+
+        sendButtonEl.disabled = false;
+
+        // Optional: Auto-submit the input after a short delay (you can remove this if not needed)
+        autoSendTimer = setTimeout(() => {
+            if (!sendButtonEl.disabled) {
+                handleSendMessage();
+            }
+        }, 60000); // <- hier Delay bis Auto-Absenden
     }, readingDelay); // Dynamic reading delay
 } else if (currentScenarioIndex < chatScenario.length && chatScenario[currentScenarioIndex].type !== 'END_SCENARIO') {
             handleNextScenarioStep(); 
